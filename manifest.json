@@ -1,0 +1,21 @@
+{
+    "name": "捷拓工程部品异及时通知系统",
+    "short_name": "捷拓工程",
+    "icons": [
+      {
+        "src": "image/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "image/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "background_color": "#FFFFFF",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#000000"
+  }
