@@ -101,13 +101,14 @@
                     if (isNaN(height)) {
                         height = 4 * width / 3; // 假设默认比例为3:4
                     }
-                    video.setAttribute("width", str(width) +'px');
-                    video.setAttribute("height", str(height) + 'px');
-                    canvas.setAttribute("width", str(width) +'px');
-                    canvas.setAttribute("height", str(height) + 'px');
                 }
+                video.setAttribute("width", width.toString() +'px');
+                video.setAttribute("height", height.toString() + 'px');
+                canvas.setAttribute("width", width.toString() +'px');
+                canvas.setAttribute("height", height.toString() + 'px');
             }
-
+            adjustVideoSize()
+            console.log(width, height)
             window.addEventListener("resize", adjustVideoSize, false); // 添加窗口大小改变时的监听器
 
             function startup() {
@@ -140,10 +141,10 @@
                                 height = 4 * width / 3;
                             }
 
-                            video.setAttribute("width", str(width) +'px');
-                            video.setAttribute("height", str(height) + 'px');
-                            canvas.setAttribute("width", str(width) +'px');
-                            canvas.setAttribute("height", str(height) + 'px');
+                            video.setAttribute("width", width.toString() +'px');
+                            video.setAttribute("height", height.toString() + 'px');
+                            canvas.setAttribute("width", width.toString() +'px');
+                            canvas.setAttribute("height", height.toString() + 'px');
                             streaming = true;
                         }
                     },
