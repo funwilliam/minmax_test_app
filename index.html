@@ -11,10 +11,10 @@
     <title>捷拓工程部品異及時通知系統</title>
     <style>
         .container {
-            max-width: 760px;
+            max-width: 640px;
             margin: auto;
         }
-        
+
         .contentarea {
             font-size: 16px;
             font-family: "Lucida Grande", "Arial", sans-serif;
@@ -22,7 +22,8 @@
             margin: auto;
         }
 
-        .camera, .output {
+        .camera,
+        .output {
             max-width: 100%;
             margin: auto;
             display: flex;
@@ -30,7 +31,8 @@
             align-items: center;
         }
 
-        #video, #photo {
+        #video,
+        #photo {
             max-width: 100%;
             border: 1px solid black;
             box-shadow: 2px 2px 3px black;
@@ -53,7 +55,6 @@
         #canvas {
             display: none;
         }
-
     </style>
 </head>
 
@@ -72,7 +73,7 @@
                 <img id="photo" alt="拍攝到的圖像" />
             </div>
             <br>
-            <p>Copyright © 2023 捷拓科技 Minmax 工程部-昱展</p> 
+            <p>Copyright © 2023 捷拓科技 Minmax 工程部-昱展</p>
         </div>
     </div>
 
@@ -97,14 +98,14 @@
             let canvas = null;
             let photo = null;
             let startbutton = null;
-            
+
             video = document.getElementById("video");
             canvas = document.getElementById("canvas");
             photo = document.getElementById("photo");
             startbutton = document.getElementById("startbutton");
 
             function adjustVideoSize() {
-                let maxWidth = 760; // 最大宽度限制
+                let maxWidth = 640; // 最大宽度限制
                 width = Math.min(window.innerWidth, maxWidth); // 取屏幕宽度和最大宽度中较小的一个
                 height = 4 * width / 3; // 假设默认比例为3:4
                 if (video && streaming) {
@@ -124,21 +125,18 @@
             window.addEventListener("resize", adjustVideoSize, false); // 添加窗口大小改变时的监听器
 
             function startup() {
-                adjustVideoSize()
                 navigator.mediaDevices.getUserMedia({
                     video: {
                         facingMode: "environment",
                         frameRate: { ideal: 60, min: 10, max: 120 },
                     },
                     audio: false
-                })
-                    .then((stream) => {
-                        video.srcObject = stream;
-                        video.play();
-                    })
-                    .catch((err) => {
-                        console.error(`An error occurred: ${err}`);
-                    });
+                }).then((stream) => {
+                    video.srcObject = stream;
+                    video.play();
+                }).catch((err) => {
+                    console.error(`An error occurred: ${err}`);
+                });
 
                 video.addEventListener(
                     "canplay",
@@ -196,10 +194,30 @@
 
             function takepicture() {
                 const context = canvas.getContext("2d");
+                // 計算裁剪尺寸
+                let sourceWidth, sourceHeight;
+                let sourceX, sourceY;
+
+                // 決定基於原始視頻的哪部分進行裁剪
+                if (video.videoWidth * 3 > video.videoHeight * 4) {
+                    // 視頻過寬，裁剪左右
+                    sourceHeight = video.videoHeight;
+                    sourceWidth = sourceHeight * 4 / 3;
+                    sourceX = (video.videoWidth - sourceWidth) / 2;
+                    sourceY = 0;
+                } else {
+                    // 視頻過高，裁剪上下
+                    sourceWidth = video.videoWidth;
+                    sourceHeight = sourceWidth * 3 / 4;
+                    sourceX = 0;
+                    sourceY = (video.videoHeight - sourceHeight) / 2;
+                }
+
                 if (width && height) {
-                    canvas.width = width;
-                    canvas.height = height;
-                    context.drawImage(video, 0, 0, width, height);
+                    // 設定畫布大小
+                    canvas.width = sourceWidth;
+                    canvas.height = sourceHeight;
+                    context.drawImage(video, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
 
                     const data = canvas.toDataURL("image/png");
                     photo.setAttribute("src", data);
