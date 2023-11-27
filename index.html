@@ -9,23 +9,30 @@
         integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
     <title>捷拓工程部品異及時通知系統</title>
     <style>
-        .contentarea {
-            font-size: 16px;
-            font-family: "Lucida Grande", "Arial", sans-serif;
+        .container {
             max-width: 760px;
             margin: auto;
         }
-
-        .camera, output {
+        
+        .contentarea {
+            font-size: 16px;
+            font-family: "Lucida Grande", "Arial", sans-serif;
             max-width: 80%;
-            height: auto;
-            display: inline-block;
+            margin: auto;
+        }
+
+        .camera, .output {
+            max-width: 100%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         #video, #photo {
+            max-width: 100%;
             border: 1px solid black;
             box-shadow: 2px 2px 3px black;
-            max-width: 100%;
         }
 
         #startbutton {
@@ -50,19 +57,22 @@
 </head>
 
 <body>
-    <div class="contentarea">
-        <h1>捷拓工程部品異及時通知系統</h1>
-        <p>請使用下方相機進行拍攝</p>
-        <div class="camera">
-            <video id="video" autoplay="true" playsinline>视频流目前不可用。</video>
-            <button id="startbutton">拍攝照片</button>
+    <div class="container">
+        <div class="contentarea">
+            <h2>捷拓工程部品異及時通知系統</h2>
+            <p>請使用下方相機進行拍攝</p>
+            <div class="camera">
+                <video id="video" autoplay="true" playsinline>视频流目前不可用。</video>
+                <button id="startbutton">拍攝照片</button>
+            </div>
+            <canvas id="canvas"></canvas>
+            <br>
+            <div class="output">
+                <img id="photo" alt="拍攝到的圖像" />
+            </div>
+            <br>
+            <p>Copyright © 2023 捷拓科技 Minmax 工程部-昱展</p> 
         </div>
-        <canvas id="canvas"></canvas>
-        <br>
-        <div class="output">
-            <img id="photo" alt="拍攝到的圖像" />
-        </div>
-        <p>捷拓工程部-昱展</p>
     </div>
 
     <script>
@@ -93,7 +103,7 @@
             startbutton = document.getElementById("startbutton");
 
             function adjustVideoSize() {
-                let maxWidth = 600; // 最大宽度限制
+                let maxWidth = 760; // 最大宽度限制
                 width = Math.min(window.innerWidth, maxWidth); // 取屏幕宽度和最大宽度中较小的一个
                 height = 4 * width / 3; // 假设默认比例为3:4
                 if (video && streaming) {
@@ -102,10 +112,11 @@
                         height = 4 * width / 3; // 假设默认比例为3:4
                     }
                 }
-                video.setAttribute("width", width.toString() +'px');
-                video.setAttribute("height", height.toString() + 'px');
-                canvas.setAttribute("width", width.toString() +'px');
-                canvas.setAttribute("height", height.toString() + 'px');
+                $('#video').width(width).height(height)
+                $('#canvas').width(width).height(height)
+                $('.camera').width(width).height(height)
+                $('.output').width(width).height(height)
+                $('#photo').width(width).height(height)
             }
             adjustVideoSize()
             console.log(width, height)
@@ -141,10 +152,10 @@
                                 height = 4 * width / 3;
                             }
 
-                            video.setAttribute("width", width.toString() +'px');
-                            video.setAttribute("height", height.toString() + 'px');
-                            canvas.setAttribute("width", width.toString() +'px');
-                            canvas.setAttribute("height", height.toString() + 'px');
+                            $('#video').width(width).height(height)
+                            $('#canvas').width(width).height(height)
+                            $('.camera').width(width).height(height)
+                            $('.output').width(width).height(height)
                             streaming = true;
                         }
                     },
