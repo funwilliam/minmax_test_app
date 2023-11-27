@@ -11,7 +11,7 @@
     <title>捷拓工程部品異及時通知系統</title>
     <style>
         .container {
-            max-width: 640px;
+            max-width: 630px;
             margin: auto;
         }
 
@@ -31,7 +31,12 @@
             align-items: center;
         }
 
-        #video,
+        #video {
+            max-width: 100%;
+            border: 1px solid black;
+            box-shadow: 2px 2px 3px black;
+        }
+
         #photo {
             max-width: 100%;
             border: 1px solid black;
@@ -98,6 +103,10 @@
             let canvas = null;
             let photo = null;
             let startbutton = null;
+            let sourceWidth = null;
+            let sourceHeight = null;
+            let sourceX = null;
+            let sourceY = null;
 
             video = document.getElementById("video");
             canvas = document.getElementById("canvas");
@@ -105,16 +114,33 @@
             startbutton = document.getElementById("startbutton");
 
             function adjustVideoSize() {
-                let maxWidth = 640; // 最大宽度限制
+                let maxWidth = 630; // 最大宽度限制
                 width = Math.min(window.innerWidth, maxWidth); // 取屏幕宽度和最大宽度中较小的一个
-                height = 4 * width / 3; // 假设默认比例为3:4
+                height = 4 * width / 3; // 寬:高=3:4
+
                 if (video && streaming) {
+                    if (video.videoHeight * 3 > video.videoWidth * 4) {
+                        sourceWidth = video.videoWidth;
+                        sourceHeight = video.videoWidth * 4 / 3;
+                        sourceX = 0;
+                        sourceY = (video.videoHeight - sourceHeight) / 2;
+                    }
+                    else {
+                        sourceWidth = video.videoHeight * 3 / 4;
+                        sourceHeight = video.videoHeight;
+                        sourceX = (video.videoWidth - sourceWidth) / 2;
+                        sourceY = 0;
+                    }
+                    let rate = (100 * sourceWidth/ width).toString() + '%';
                     height = video.videoHeight / (video.videoWidth / width);
                     if (isNaN(height)) {
-                        height = 4 * width / 3; // 假设默认比例为3:4
+                        height = 4 * width / 3; // 寬:高=3:4
                     }
+                    $('#video').position(sourceX, sourceY).width(width).height('auto')
                 }
-                $('#video').width(width).height(height)
+                else {
+                    $('#video').width(width).height(height)
+                }
                 $('#canvas').width(width).height(height)
                 $('.camera').width(width).height(height)
                 $('.output').width(width).height(height)
@@ -194,30 +220,10 @@
 
             function takepicture() {
                 const context = canvas.getContext("2d");
-                // 計算裁剪尺寸
-                let sourceWidth, sourceHeight;
-                let sourceX, sourceY;
-
-                // 決定基於原始視頻的哪部分進行裁剪
-                if (video.videoWidth * 3 > video.videoHeight * 4) {
-                    // 視頻過寬，裁剪左右
-                    sourceHeight = video.videoHeight;
-                    sourceWidth = sourceHeight * 4 / 3;
-                    sourceX = (video.videoWidth - sourceWidth) / 2;
-                    sourceY = 0;
-                } else {
-                    // 視頻過高，裁剪上下
-                    sourceWidth = video.videoWidth;
-                    sourceHeight = sourceWidth * 3 / 4;
-                    sourceX = 0;
-                    sourceY = (video.videoHeight - sourceHeight) / 2;
-                }
-
                 if (width && height) {
-                    // 設定畫布大小
-                    canvas.width = sourceWidth;
-                    canvas.height = sourceHeight;
-                    context.drawImage(video, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+                    canvas.width = width;
+                    canvas.height = height;
+                    context.drawImage(video, 0, 0, width, height);
 
                     const data = canvas.toDataURL("image/png");
                     photo.setAttribute("src", data);
