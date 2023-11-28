@@ -213,10 +213,9 @@
 
             function takepicture() {
                 const context = canvas.getContext("2d");
-                if (width && height) {
-                    canvas.width = width;
-                    canvas.height = height;
-                    context.drawImage(video, 0, 0, width, height);
+                if (sourceWidth && sourceHeight) {
+                    adjustVideoSize()
+                    context.drawImage(video, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
 
                     const data = canvas.toDataURL("image/png");
                     photo.setAttribute("src", data);
@@ -228,6 +227,8 @@
             // Set up our event listener to run the startup process
             // once loading is complete.
             window.addEventListener("load", startup, false);
+
+
         })();
     </script>
 </body>
