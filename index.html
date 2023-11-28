@@ -82,11 +82,14 @@
             </div>
             <canvas id="canvas"></canvas>
             <br>
+            <br>
             <div class="output">
                 <img id="photo" alt="拍攝到的圖像" />
             </div>
+            <p id="debug-console"></p>
             <br>
-            <p>Copyright © 2023 捷拓科技 Minmax 工程部-昱展</p>
+            <br>
+            <p>Copyright © 2023 捷拓科技-工程部 昱展</p>
         </div>
     </div>
 
@@ -144,13 +147,14 @@
                     if (isNaN(height)) {
                         height = 4 * width / 3; // 寬:高=3:4
                     }
-                    $('#video').position(sourceX, sourceY).width(width).height('auto');
+                    $('#canvas').width(sourceWidth).height(sourceHeight);
+                    $('#photo').width(sourceWidth).height(sourceHeight);
+                    $('#debug-console').text('width=' + sourceWidth.toString() + ' height=' + sourceHeight.toString());
                 }
                 else {
                     $('#video').width(width).height(height);
+                    $('#photo').width(width).height(height);
                 }
-                $('#canvas').width(sourceWidth).height(sourceHeight);
-                $('#photo').width(width).height(height);
             }
             adjustVideoSize();
             window.addEventListener("resize", adjustVideoSize, false); // 添加窗口大小改变时的监听器
@@ -172,9 +176,10 @@
                 video.addEventListener(
                     "canplay",
                     (ev) => {
+                        adjustVideoSize();
                         if (!streaming) {
-                            height = video.videoHeight / (video.videoWidth / width);
-
+                            // height = video.videoHeight / (video.videoWidth / width);
+                            
                             // Firefox currently has a bug where the height can't be read from
                             // the video, so we will make assumptions if this happens.
 
@@ -229,14 +234,14 @@
 
                     const data = canvas.toDataURL("image/png");
                     photo.setAttribute("src", data);
-                    console.log(canvas);
                 }
                 else if (width && height) {
-                    console.log(canvas.width, canvas.height)
+                    
                 } 
                 else {
                     clearphoto();
                 }
+                
             }
 
             // Set up our event listener to run the startup process
