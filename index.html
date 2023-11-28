@@ -154,7 +154,7 @@
                 else {
                     $('#video').width(width).height(height);
                     $('#photo').width(width).height(height);
-                    $('#debug-console').text('videoWidth=' + video.videoWidth.toString() + ' videoheight=' + video.videoHeight.toString());
+                    $('#debug-console').text('videoWidth=' + video.videoWidth.toString() + ' videoheight=' + video.videoHeight.toString() + 'streaming');
                 }
             }
             adjustVideoSize();
@@ -177,9 +177,9 @@
                 video.addEventListener(
                     "canplay",
                     (ev) => {
-                        adjustVideoSize();
                         if (!streaming) {
-                            // height = video.videoHeight / (video.videoWidth / width);
+                            
+                            height = video.videoHeight / (video.videoWidth / width);
                             
                             // Firefox currently has a bug where the height can't be read from
                             // the video, so we will make assumptions if this happens.
@@ -189,10 +189,10 @@
                             }
 
                             $('#video').width(width).height(height);
-                            $('#canvas').width(width).height(height);
                             $('#photo').width(width).height(height);
                             streaming = true;
                         }
+                        adjustVideoSize();
                     },
                     false,
                 );
@@ -236,9 +236,9 @@
                     const data = canvas.toDataURL("image/png");
                     photo.setAttribute("src", data);
                 }
-                else if (width && height) {
+                // else if (width && height) {
                     
-                } 
+                // } 
                 else {
                     clearphoto();
                 }
