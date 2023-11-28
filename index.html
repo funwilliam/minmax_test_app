@@ -11,7 +11,7 @@
     <title>捷拓工程部品異及時通知系統</title>
     <style>
         .container {
-            max-width: 630px;
+            max-width: 750px;
             margin: auto;
         }
 
@@ -22,33 +22,41 @@
             margin: auto;
         }
 
-        .camera,
+        .camera {
+            max-width: 100%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            border: 1px solid black;
+            box-shadow: 2px 2px 3px black;
+        }
+        
         .output {
             max-width: 100%;
             margin: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
+            border: 1px solid black;
+            box-shadow: 2px 2px 3px black;
         }
 
         #video {
             max-width: 100%;
-            border: 1px solid black;
-            box-shadow: 2px 2px 3px black;
         }
 
         #photo {
             max-width: 100%;
-            border: 1px solid black;
-            box-shadow: 2px 2px 3px black;
         }
 
         #startbutton {
             display: block;
-            position: relative;
-            margin-left: auto;
-            margin-right: auto;
-            bottom: 32px;
+            position: absolute; /* 修改：绝对定位 */
+            left: 50%; /* 新增：水平居中 */
+            transform: translateX(-50%); /* 新增：精确居中调整 */
+            bottom: 5%; /* 修改：相对于父元素底部的位置 */
             background-color: rgba(0, 150, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.7);
             box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
@@ -114,7 +122,7 @@
             startbutton = document.getElementById("startbutton");
 
             function adjustVideoSize() {
-                let maxWidth = 630; // 最大宽度限制
+                let maxWidth = 600; // 最大宽度限制
                 width = Math.min(window.innerWidth, maxWidth); // 取屏幕宽度和最大宽度中较小的一个
                 height = 4 * width / 3; // 寬:高=3:4
 
@@ -141,9 +149,7 @@
                 else {
                     $('#video').width(width).height(height)
                 }
-                $('#canvas').width(width).height(height)
-                $('.camera').width(width).height(height)
-                $('.output').width(width).height(height)
+                $('#canvas').width(sourceWidth).height(sourceHeight)
                 $('#photo').width(width).height(height)
             }
             adjustVideoSize()
@@ -168,20 +174,7 @@
                     "canplay",
                     (ev) => {
                         if (!streaming) {
-                            height = video.videoHeight / (video.videoWidth / width);
-
-                            // Firefox currently has a bug where the height can't be read from
-                            // the video, so we will make assumptions if this happens.
-
-                            if (isNaN(height)) {
-                                height = 4 * width / 3;
-                            }
-
-                            $('#video').width(width).height(height)
-                            $('#canvas').width(width).height(height)
-                            $('.camera').width(width).height(height)
-                            $('.output').width(width).height(height)
-                            $('#photo').width(width).height(height)
+                            adjustVideoSize()
                             streaming = true;
                         }
                     },
