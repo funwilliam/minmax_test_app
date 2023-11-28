@@ -215,7 +215,7 @@
                 const context = canvas.getContext("2d");
                 if (sourceWidth && sourceHeight) {
                     adjustVideoSize()
-                    context.drawImage(video, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+                    context.drawImage(video, sourceX, sourceY, 0, 0, sourceWidth, sourceHeight);
 
                     const data = canvas.toDataURL("image/png");
                     photo.setAttribute("src", data);
