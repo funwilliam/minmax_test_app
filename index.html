@@ -174,7 +174,18 @@
                     "canplay",
                     (ev) => {
                         if (!streaming) {
-                            adjustVideoSize()
+                            height = video.videoHeight / (video.videoWidth / width);
+
+                            // Firefox currently has a bug where the height can't be read from
+                            // the video, so we will make assumptions if this happens.
+
+                            if (isNaN(height)) {
+                                height = 4 * width / 3;
+                            }
+
+                            $('#video').width(width).height(height)
+                            $('#canvas').width(width).height(height)
+                            $('#photo').width(width).height(height)
                             streaming = true;
                         }
                     },
@@ -214,8 +225,9 @@
             function takepicture() {
                 const context = canvas.getContext("2d");
                 if (sourceWidth && sourceHeight) {
-                    adjustVideoSize()
-                    context.drawImage(video, sourceX, sourceY, 0, 0, sourceWidth, sourceHeight);
+                    canvas.width = sourceWidth;
+                    canvas.height = sourceHeight;
+                    context.drawImage(video, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height)
 
                     const data = canvas.toDataURL("image/png");
                     photo.setAttribute("src", data);
@@ -227,8 +239,6 @@
             // Set up our event listener to run the startup process
             // once loading is complete.
             window.addEventListener("load", startup, false);
-
-
         })();
     </script>
 </body>
