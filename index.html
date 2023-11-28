@@ -11,7 +11,7 @@
     <title>捷拓工程部品異及時通知系統</title>
     <style>
         .container {
-            max-width: 750px;
+            max-width: 1300px;
             margin: auto;
         }
 
@@ -99,8 +99,8 @@
             // width to the value defined here, but the height will be
             // calculated based on the aspect ratio of the input stream.
 
-            let width = 240; // We will scale the photo width to this
-            let height = 320; // This will be computed based on the input stream
+            let width = 1080; // We will scale the photo width to this
+            let height = 1440; // This will be computed based on the input stream
 
             // |streaming| indicates whether or not we're currently streaming
             // video from the camera. Obviously, we start at false.
@@ -125,7 +125,7 @@
             startbutton = document.getElementById("startbutton");
 
             function adjustVideoSize() {
-                let maxWidth = 600; // 最大宽度限制
+                let maxWidth = 1080; // 最大宽度限制
                 width = Math.min(window.innerWidth, maxWidth); // 取屏幕宽度和最大宽度中较小的一个
                 height = 4 * width / 3; // 寬:高=3:4
 
@@ -166,7 +166,8 @@
                     video: {
                         facingMode: "environment",
                         frameRate: {min: 10, max: 120},
-                        width: {min: 600, max: 1080}
+                        width: width,
+                        height: height
                     },
                     audio: false
                 }).then((stream) => {
