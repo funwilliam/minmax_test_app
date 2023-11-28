@@ -147,14 +147,15 @@
                     if (isNaN(height)) {
                         height = 4 * width / 3; // 寬:高=3:4
                     }
+                    $('#video').width(sourceWidth).height(sourceHeight);
                     $('#canvas').width(sourceWidth).height(sourceHeight);
                     $('#photo').width(sourceWidth).height(sourceHeight);
-                    $('#debug-console').text('width=' + sourceWidth.toString() + ' height=' + sourceHeight.toString());
+                    $('#debug-console').text('sourceWidth=' + sourceWidth.toString() + ' sourceHeight=' + sourceHeight.toString() + '縮放=' + rate.toString());
                 }
                 else {
                     $('#video').width(width).height(height);
                     $('#photo').width(width).height(height);
-                    $('#debug-console').text('videoWidth=' + video.videoWidth.toString() + ' videoheight=' + video.videoHeight.toString() + 'streaming');
+                    $('#debug-console').text('videoWidth=' + video.videoWidth.toString() + ' videoheight=' + video.videoHeight.toString());
                 }
             }
             adjustVideoSize();
@@ -164,7 +165,8 @@
                 navigator.mediaDevices.getUserMedia({
                     video: {
                         facingMode: "environment",
-                        frameRate: { ideal: 60, min: 10, max: 120 },
+                        frameRate: {min: 10, max: 120},
+                        width: {min: 600, max: 1080}
                     },
                     audio: false
                 }).then((stream) => {
