@@ -131,7 +131,8 @@
                         facingMode: "environment",
                         frameRate: { min: 10, max: 120 },
                         width: 1440,
-                        height: 1080
+                        height: 1080,
+                        focusMode: "continuous"
                     },
                     audio: false
                 }).then((stream) => {
@@ -224,10 +225,9 @@
                         // downloadLink.click();
                         // document.body.removeChild(downloadLink);
 
-                        let source_rect = $('<p>').text('source=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
-                        let canvas_status = $('<p>').text('canvas status=' + canvas.width.toString() + ',' + canvas.height.toString());
-                        let photo_status = $('<p>').text('photo status = ' + photo.width.toString() + ',' + + photo.height.toString());
-                        $('#debug-console').empty().append(source_rect).append(canvas_status).append(photo_status);
+                        let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
+                        let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
+                        $('#debug-console').empty().append(source_rect).append(display_rect);
                     } catch (err) {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
