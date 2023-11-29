@@ -18,7 +18,7 @@
         .contentarea {
             font-size: 16px;
             font-family: "Lucida Grande", "Arial", sans-serif;
-            max-width: 100%;
+            max-width: 80%;
             margin: auto;
         }
 
@@ -129,43 +129,6 @@
             photo = document.getElementById("photo");
             startbutton = document.getElementById("startbutton");
 
-            // function adjustVideoSize() {
-            //     let maxWidth = 1080; // 最大宽度限制
-            //     width = Math.min(window.innerWidth, maxWidth); // 取屏幕宽度和最大宽度中较小的一个
-            //     height = 4 * width / 3; // 寬:高=3:4
-
-            //     if (video && streaming) {
-            //         if (video.videoHeight * 3 > video.videoWidth * 4) {
-            //             sourceWidth = video.videoWidth;
-            //             sourceHeight = video.videoWidth * 4 / 3;
-            //             sourceX = 0;
-            //             sourceY = (video.videoHeight - sourceHeight) / 2;
-            //         }
-            //         else {
-            //             sourceWidth = video.videoHeight * 3 / 4;
-            //             sourceHeight = video.videoHeight;
-            //             sourceX = (video.videoWidth - sourceWidth) / 2;
-            //             sourceY = 0;
-            //         }
-            //         let rate = (100 * sourceWidth / width).toString() + '%';
-            //         height = video.videoHeight / (video.videoWidth / width);
-            //         if (isNaN(height)) {
-            //             height = 4 * width / 3; // 寬:高=3:4
-            //         }
-            //         $('#video').width(sourceWidth).height(sourceHeight);
-            //         $('#canvas').width(sourceWidth).height(sourceHeight);
-            //         $('#photo').width(sourceWidth).height(sourceHeight);
-            //         $('#debug-console').text('sourceWidth=' + sourceWidth.toString() + ' sourceHeight=' + sourceHeight.toString() + '縮放=' + rate.toString());
-            //     }
-            //     else {
-            //         $('#video').width(width).height(height);
-            //         $('#photo').width(width).height(height);
-            //         $('#debug-console').text('videoWidth=' + video.videoWidth.toString() + ' videoheight=' + video.videoHeight.toString());
-            //     }
-            // }
-            // adjustVideoSize();
-            // window.addEventListener("resize", adjustVideoSize, false); // 添加窗口大小改变时的监听器
-
             function startup() {
                 navigator.mediaDevices.getUserMedia({
                     video: {
@@ -200,7 +163,7 @@
                             // $('#photo').width(width).height(height);
                             // streaming = true;
                         }
-                        $('#debug-console').text('sourceWidth=' + video.videoWidth.toString() + ',' + video.videoHeight.toString() + '\noffset=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString());
+                        $('#debug-console').text('source=' + video.videoWidth.toString() + ',' + video.videoHeight.toString() + '<br>offset=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + '<br>+screen_width=' + screen_width.toString());
                     },
                     false,
                 );
