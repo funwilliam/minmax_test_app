@@ -217,8 +217,16 @@
                         const data = canvas.toDataURL("image/png");
                         photo.setAttribute("src", data);
 
-                        let data_status = $('<p>').text('data status = ' + data.toString());
-                        $('#debug-console').empty().append(data_status);
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = data; // Data URL 从 canvas 获取
+                        downloadLink.download = 'captured-image.png'; // 设置下载文件名
+                        document.body.appendChild(downloadLink);
+                        downloadLink.click();
+                        document.body.removeChild(downloadLink);
+
+                        let photo_status = $('<p>').text('photo status = ' + photo.width.toString() + ',' +  + photo.height.toString());
+                        let data_contents = $('<p>').text('data contents = ' + data.toString());
+                        $('#debug-console').empty().append(photo_status).append(data_contents);
                     } catch (err) {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
