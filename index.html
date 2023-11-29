@@ -86,7 +86,6 @@
                 <img id="photo" alt="拍攝到的圖像" />
                 <button id="startbutton">拍攝照片</button>
             </div>
-            <canvas id="canvas"></canvas>
             <br>
             <br>
             <!-- <div class="output">
@@ -98,6 +97,7 @@
             <p>Copyright © 2023 捷拓科技-工程部 昱展</p>
         </div>
     </div>
+    <canvas id="canvas"></canvas>
 
     <script>
         (() => {
@@ -201,7 +201,6 @@
             // other changes before drawing it.
 
             function takepicture() {
-                const context = canvas.getContext("2d");
                 if (streaming) {
                     try {
                         $('#startbutton').text('重新拍攝');
@@ -209,10 +208,11 @@
                         $('#photo').width(video.offsetWidth).height(video.offsetHeight);
                         $('#video').hide();
                         $('#photo').show();
-                        
+
                         stream = false;
                         video.pause();
 
+                        let context = canvas.getContext("2d");
                         context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
                         const data = canvas.toDataURL("image/png");
                         photo.setAttribute("src", data);
@@ -225,7 +225,7 @@
                         document.body.removeChild(downloadLink);
 
                         let source_rect = $('<p>').text('source=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
-                        let display_rect = $('<p>').text('offset=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString());
+                        let canvas_status = $('<p>').text('canvas status=' + canvas.width.toString() + ',' + canvas.height.toString());
                         let photo_status = $('<p>').text('photo status = ' + photo.width.toString() + ',' +  + photo.height.toString());
                         let data_contents = $('<p>').text('data contents = ' + data.toString());
                         $('#debug-console').empty().append(source_rect).append(display_rect).append(photo_status).append(data_contents);
