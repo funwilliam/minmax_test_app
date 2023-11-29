@@ -178,7 +178,6 @@
                 }).then((stream) => {
                     video.srcObject = stream;
                     video.play();
-                    $('#debug-console').text('sourceWidth=' + video.videoWidth.toString() + ' sourceHeight=' + video.videoHeight.toString() + 'offset=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString());
                 }).catch((err) => {
                     console.error(`An error occurred: ${err}`);
                 });
@@ -188,19 +187,20 @@
                     (ev) => {
                         if (!streaming) {
 
-                            height = video.videoHeight / (video.videoWidth / width);
+                            // height = video.videoHeight / (video.videoWidth / width);
 
                             // Firefox currently has a bug where the height can't be read from
                             // the video, so we will make assumptions if this happens.
 
-                            if (isNaN(height)) {
-                                height = 4 * width / 3;
-                            }
+                            // if (isNaN(height)) {
+                            //     height = 4 * width / 3;
+                            // }
 
-                            $('#video').width(width).height(height);
-                            $('#photo').width(width).height(height);
-                            streaming = true;
+                            // $('#video').width(width).height(height);
+                            // $('#photo').width(width).height(height);
+                            // streaming = true;
                         }
+                        $('#debug-console').text('sourceWidth=' + video.videoWidth.toString() + ',' + video.videoHeight.toString() + '\noffset=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString());
                     },
                     false,
                 );
