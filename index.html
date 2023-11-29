@@ -209,7 +209,7 @@
                         $('#video').hide();
                         $('#photo').show();
 
-                        stream = false;
+                        streaming = false;
                         video.pause();
 
                         let context = canvas.getContext("2d");
@@ -235,7 +235,7 @@
                     }
                 }
                 else {
-                    stream = true;
+                    streaming = true;
                     clearphoto();
                     $('#photo').hide();
                     $('#video').show();
