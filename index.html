@@ -134,7 +134,7 @@
                     video: {
                         facingMode: "environment",
                         frameRate: { min: 10, max: 120 },
-                        width: 1920,
+                        width: 1440,
                         height: 1080
                     },
                     audio: false
@@ -161,8 +161,9 @@
 
                             // $('#video').width(width).height(height);
                             // $('#photo').width(width).height(height);
-                            // streaming = true;
+                            streaming = true;
                         }
+
                         $('#debug-console').text('source=' + video.videoWidth.toString() + ',' + video.videoHeight.toString() + '<br>offset=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + '<br>+screen_width=' + screen_width.toString());
                     },
                     false,
