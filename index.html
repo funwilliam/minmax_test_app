@@ -11,14 +11,14 @@
     <title>捷拓工程部品異及時通知系統</title>
     <style>
         .container {
-            max-width: 1300px;
+            max-width: 1080px;
             margin: auto;
         }
 
         .contentarea {
             font-size: 16px;
             font-family: "Lucida Grande", "Arial", sans-serif;
-            max-width: 80%;
+            max-width: 100%;
             margin: auto;
         }
 
@@ -81,7 +81,7 @@
             <h2>捷拓工程部品異及時通知系統</h2>
             <p>請使用下方相機進行拍攝</p>
             <div class="camera">
-                <video id="video" autoplay="true" playsinline>视频流目前不可用。</video>
+                <video id="video" autoplay="true" playsinline>影片串流目前不可用。</video>
                 <button id="startbutton">拍攝照片</button>
             </div>
             <canvas id="canvas"></canvas>
@@ -103,14 +103,14 @@
             // width to the value defined here, but the height will be
             // calculated based on the aspect ratio of the input stream.
 
-            let width = 1080; // We will scale the photo width to this
-            let height = 1440; // This will be computed based on the input stream
+            let screen_width = window.innerWidth;
+            let block_width = Math.min(screen_width * 0.75, 1080 * 0.75);
+            let blocl_height = block_width * 4 / 3;
 
             // |streaming| indicates whether or not we're currently streaming
             // video from the camera. Obviously, we start at false.
 
             let streaming = false;
-            let init_google = false;
 
             // The various HTML elements we need to configure or control. These
             // will be set by the startup() function.
@@ -123,49 +123,48 @@
             let sourceHeight = null;
             let sourceX = null;
             let sourceY = null;
-            let drive = null;
 
             video = document.getElementById("video");
             canvas = document.getElementById("canvas");
             photo = document.getElementById("photo");
             startbutton = document.getElementById("startbutton");
 
-            function adjustVideoSize() {
-                let maxWidth = 1080; // 最大宽度限制
-                width = Math.min(window.innerWidth, maxWidth); // 取屏幕宽度和最大宽度中较小的一个
-                height = 4 * width / 3; // 寬:高=3:4
+            // function adjustVideoSize() {
+            //     let maxWidth = 1080; // 最大宽度限制
+            //     width = Math.min(window.innerWidth, maxWidth); // 取屏幕宽度和最大宽度中较小的一个
+            //     height = 4 * width / 3; // 寬:高=3:4
 
-                if (video && streaming) {
-                    if (video.videoHeight * 3 > video.videoWidth * 4) {
-                        sourceWidth = video.videoWidth;
-                        sourceHeight = video.videoWidth * 4 / 3;
-                        sourceX = 0;
-                        sourceY = (video.videoHeight - sourceHeight) / 2;
-                    }
-                    else {
-                        sourceWidth = video.videoHeight * 3 / 4;
-                        sourceHeight = video.videoHeight;
-                        sourceX = (video.videoWidth - sourceWidth) / 2;
-                        sourceY = 0;
-                    }
-                    let rate = (100 * sourceWidth / width).toString() + '%';
-                    height = video.videoHeight / (video.videoWidth / width);
-                    if (isNaN(height)) {
-                        height = 4 * width / 3; // 寬:高=3:4
-                    }
-                    $('#video').width(sourceWidth).height(sourceHeight);
-                    $('#canvas').width(sourceWidth).height(sourceHeight);
-                    $('#photo').width(sourceWidth).height(sourceHeight);
-                    $('#debug-console').text('sourceWidth=' + sourceWidth.toString() + ' sourceHeight=' + sourceHeight.toString() + '縮放=' + rate.toString());
-                }
-                else {
-                    $('#video').width(width).height(height);
-                    $('#photo').width(width).height(height);
-                    $('#debug-console').text('videoWidth=' + video.videoWidth.toString() + ' videoheight=' + video.videoHeight.toString());
-                }
-            }
-            adjustVideoSize();
-            window.addEventListener("resize", adjustVideoSize, false); // 添加窗口大小改变时的监听器
+            //     if (video && streaming) {
+            //         if (video.videoHeight * 3 > video.videoWidth * 4) {
+            //             sourceWidth = video.videoWidth;
+            //             sourceHeight = video.videoWidth * 4 / 3;
+            //             sourceX = 0;
+            //             sourceY = (video.videoHeight - sourceHeight) / 2;
+            //         }
+            //         else {
+            //             sourceWidth = video.videoHeight * 3 / 4;
+            //             sourceHeight = video.videoHeight;
+            //             sourceX = (video.videoWidth - sourceWidth) / 2;
+            //             sourceY = 0;
+            //         }
+            //         let rate = (100 * sourceWidth / width).toString() + '%';
+            //         height = video.videoHeight / (video.videoWidth / width);
+            //         if (isNaN(height)) {
+            //             height = 4 * width / 3; // 寬:高=3:4
+            //         }
+            //         $('#video').width(sourceWidth).height(sourceHeight);
+            //         $('#canvas').width(sourceWidth).height(sourceHeight);
+            //         $('#photo').width(sourceWidth).height(sourceHeight);
+            //         $('#debug-console').text('sourceWidth=' + sourceWidth.toString() + ' sourceHeight=' + sourceHeight.toString() + '縮放=' + rate.toString());
+            //     }
+            //     else {
+            //         $('#video').width(width).height(height);
+            //         $('#photo').width(width).height(height);
+            //         $('#debug-console').text('videoWidth=' + video.videoWidth.toString() + ' videoheight=' + video.videoHeight.toString());
+            //     }
+            // }
+            // adjustVideoSize();
+            // window.addEventListener("resize", adjustVideoSize, false); // 添加窗口大小改变时的监听器
 
             function startup() {
                 navigator.mediaDevices.getUserMedia({
@@ -177,6 +176,8 @@
                     },
                     audio: false
                 }).then((stream) => {
+                    $('#debug-console').text('sourceWidth=' + stream.toString() + ' sourceHeight=' + stream.toString());
+                    
                     video.srcObject = stream;
                     video.play();
                 }).catch((err) => {
@@ -201,7 +202,6 @@
                             $('#photo').width(width).height(height);
                             streaming = true;
                         }
-                        adjustVideoSize();
                     },
                     false,
                 );
@@ -238,70 +238,16 @@
 
             function takepicture() {
                 const context = canvas.getContext("2d");
-                if (sourceWidth && sourceHeight) {
+                if (true) {
                     $('#canvas').width(sourceWidth).height(sourceHeight);
                     context.drawImage(video, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
-
                     const data = canvas.toDataURL("image/png");
                     photo.setAttribute("src", data);
-                    uploadFile(data)
                 }
                 else {
                     clearphoto();
                 }
 
-            }
-
-            function google_client_init() {
-                const { google } = require('googleapis');
-
-                // 加载服务账户密钥
-                const serviceAccount = require('service-account.json');
-
-                // 配置JWT客户端
-                const jwtClient = new google.auth.JWT(
-                    serviceAccount.client_email,
-                    null,
-                    serviceAccount.private_key,
-                    ['https://www.googleapis.com/auth/drive'],
-                    null
-                );
-
-                // Google Drive API
-                drive = google.drive({ version: 'v3', auth: jwtClient });
-            }
-
-            // 上传文件
-            function uploadFile(fileContent) {
-                if (!init_google) {
-                    google_client_init()
-                    init_google = true
-                }
-                if (drive) {
-                    const fileMetadata = {
-                        'name': `${Date().getTime()}.png`, // 文件名
-                    };
-                    const media = {
-                        mimeType: 'image/png',
-                        body: fileContent // 文件内容
-                    };
-
-                    drive.files.create({
-                        resource: fileMetadata,
-                        media: media,
-                        fields: 'id'
-                    }, (err, file) => {
-                        if (err) {
-                            // 处理错误
-                            console.error(err);
-                        } else {
-                            console.log('File Id:', file.id);
-                        }
-                    });
-                }
-                else {
-                    console.log('google 客戶端建立失敗，無法上傳檔案')
-                }
             }
 
             // Set up our event listener to run the startup process
