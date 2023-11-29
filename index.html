@@ -204,14 +204,14 @@
                 const context = canvas.getContext("2d");
                 if (streaming) {
                     try {
-                        stream = false;
-                        video.pause();
-                        
-                        $('#video').hide();
                         $('#startbutton').text('重新拍攝');
                         $('#canvas').width(video.videoWidth).height(video.videoHeight);
                         $('#photo').width(video.offsetWidth).height(video.offsetHeight);
+                        $('#video').hide();
                         $('#photo').show();
+                        
+                        stream = false;
+                        video.pause();
 
                         context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
                         const data = canvas.toDataURL("image/png");
