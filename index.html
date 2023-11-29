@@ -88,9 +88,6 @@
             </div>
             <br>
             <br>
-            <!-- <div class="output">
-                <img id="photo" alt="拍攝到的圖像" />
-            </div> -->
             <div id="debug-console"></div>
             <br>
             <br>
@@ -206,7 +203,8 @@
             function takepicture() {
                 if (streaming) {
                     try {
-                        canvas.width = video.videoWidth;
+                        // canvas不吃jquery設定，debug到崩潰，機掰到爆炸
+                        canvas.width = video.videoWidth; 
                         canvas.height = video.videoHeight;
                         $('#startbutton').text('重新拍攝');
                         $('#photo').width(video.offsetWidth).height(video.offsetHeight);
@@ -221,12 +219,13 @@
                         const data = canvas.toDataURL("image/png");
                         photo.setAttribute("src", data);
 
-                        const downloadLink = document.createElement('a');
-                        downloadLink.href = data; // Data URL 从 canvas 获取
-                        downloadLink.download = 'captured-image.png'; // 设置下载文件名
-                        document.body.appendChild(downloadLink);
-                        downloadLink.click();
-                        document.body.removeChild(downloadLink);
+                        // 下載測試
+                        // const downloadLink = document.createElement('a');
+                        // downloadLink.href = data; // Data URL 从 canvas 获取
+                        // downloadLink.download = 'captured-image.png'; // 设置下载文件名
+                        // document.body.appendChild(downloadLink);
+                        // downloadLink.click();
+                        // document.body.removeChild(downloadLink);
 
                         let source_rect = $('<p>').text('source=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
                         let canvas_status = $('<p>').text('canvas status=' + canvas.width.toString() + ',' + canvas.height.toString());
@@ -240,20 +239,12 @@
                 }
                 else {
                     stream = true;
+                    clearphoto();
                     $('#photo').hide();
                     $('#video').show();
                     $('#startbutton').text('拍攝照片');
                     video.play();
                 }
-                // if (true) {
-                //     $('#canvas').width(sourceWidth).height(sourceHeight);
-                //     context.drawImage(video, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
-                //     const data = canvas.toDataURL("image/png");
-                //     photo.setAttribute("src", data);
-                // }
-                // else {
-                //     clearphoto();
-                // }
             }
 
             // Set up our event listener to run the startup process
