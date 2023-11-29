@@ -204,11 +204,12 @@
                 if (streaming) {
                     stream = false;
                     video.pause();
+                    context.drawImage(video, 0, 0);
                     $('#video').hide();
                     $('#photo').show();
                     $('#startbutton').text('重新拍攝');
                     $('#canvas').width(video.videoWidth).height(video.videoHeight);
-                    context.drawImage(video, 0, 0);
+                    $('#photo').width(video.offsetWidth).height(video.offsetHeight);
 
                     const data = canvas.toDataURL("image/png");
                     photo.setAttribute("src", data);
