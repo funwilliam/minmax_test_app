@@ -167,7 +167,6 @@
                         let display_rect = $('<p>').text('offset=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString());
                         let screen_width_text = $('<p>').text('screen-width=' + screen.width.toString());
                         $('#debug-console').empty().append(canvas_status).append(source_rect).append(display_rect).append(screen_width_text);
-
                     },
                     false,
                 );
@@ -186,7 +185,8 @@
             // captured.
 
             function clearphoto() {
-                canvas.empty();
+                let context = canvas.getContext('2d');
+                context.clearRect(0, 0, canvas.width, canvas.height);
                 canvas.width = 0;
                 canvas.height = 0;
             }
