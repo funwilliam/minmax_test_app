@@ -29,8 +29,6 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            border-top: 1px solid black;
-            border-left: 1px solid black;
             box-shadow: 2px 2px 3px black;
         }
 
@@ -40,22 +38,22 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-top: 1px solid black;
-            border-left: 1px solid black;
             box-shadow: 2px 2px 3px black;
         }
 
         #video {
             display: none;
+            border: 1px solid black;
             max-width: 100%;
         }
 
         #photo {
+            border: 1px solid black;
             display: none;
             max-width: 100%;
         }
 
-        #startbutton {
+        #shooting_btn {
             display: none;
             position: absolute;
             /* 绝对定位 */
@@ -88,12 +86,11 @@
             <div class="camera">
                 <video id="video" autoplay="true" playsinline>影片串流目前不可用。</video>
                 <img id="photo" alt="拍攝到的圖像" />
-                <button id="startbutton">拍攝照片</button>
+                <button id="shooting_btn">拍攝照片</button>
             </div>
             <br>
-            <br>
+            <button id="uploadbutton">拍攝照片</button>
             <div id="debug-console"></div>
-            <br>
             <br>
             <p>Copyright © 2023 捷拓科技-工程部 昱展</p>
         </div>
@@ -121,12 +118,12 @@
             let video = null;
             let canvas = null;
             let photo = null;
-            let startbutton = null;
+            let shooting_btn = null;
 
             video = document.getElementById("video");
             canvas = document.getElementById("canvas");
             photo = document.getElementById("photo");
-            startbutton = document.getElementById("startbutton");
+            shooting_btn = document.getElementById("shooting_btn");
 
             clearphoto();
 
@@ -144,7 +141,7 @@
                     video.srcObject = stream;
                     video.play();
                     $('#video').show();
-                    $('#startbutton').show();
+                    $('#shooting_btn').show();
                 }).catch((err) => {
                     console.error(`An error occurred: ${err}`);
                 });
@@ -176,7 +173,7 @@
                     false,
                 );
 
-                startbutton.addEventListener(
+                shooting_btn.addEventListener(
                     "click",
                     (ev) => {
                         takepicture();
@@ -209,7 +206,7 @@
                         // canvas不吃jquery設定，debug到崩潰，機掰到爆炸
                         canvas.width = video.videoWidth;
                         canvas.height = video.videoHeight;
-                        $('#startbutton').text('重新拍攝');
+                        $('#shooting_btn').text('重新拍攝');
                         $('#photo').width(video.offsetWidth).height(video.offsetHeight);
                         $('#video').hide();
                         $('#photo').show();
@@ -243,7 +240,7 @@
                     clearphoto();
                     $('#photo').hide();
                     $('#video').show();
-                    $('#startbutton').text('拍攝照片');
+                    $('#shooting_btn').text('拍攝照片');
                     video.play().then(() => {
                         let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
                         let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
