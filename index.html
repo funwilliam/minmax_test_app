@@ -163,8 +163,9 @@
                         }
                         let source_rect = $('<p>').text('source=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
                         let display_rect = $('<p>').text('offset=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString());
-                        let screen_width = $('<p>').text('screen_width=' + screen_width.toString());
-                        $('#debug-console').append(source_rect).append(display_rect).append(screen_width);
+                        let screen_width_text = $('<p>').text('screen-width=' + screen.width.toString());
+                        $('#debug-console').append(source_rect).append(display_rect).append(screen_width_text);
+
                     },
                     false,
                 );
@@ -208,7 +209,7 @@
                     $('#startbutton').text('重新拍攝');
                     $('#canvas').width(video.videoWidth).height(video.videoHeight);
                     context.drawImage(video, 0, 0);
-                    
+
                     const data = canvas.toDataURL("image/png");
                     photo.setAttribute("src", data);
                 }
