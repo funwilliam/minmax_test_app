@@ -206,15 +206,19 @@
                     try {
                         stream = false;
                         video.pause();
-                        context.drawImage(video, 0, 0);
+                        
                         $('#video').hide();
-                        $('#photo').show();
                         $('#startbutton').text('重新拍攝');
                         $('#canvas').width(video.videoWidth).height(video.videoHeight);
                         $('#photo').width(video.offsetWidth).height(video.offsetHeight);
+                        $('#photo').show();
 
+                        context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
                         const data = canvas.toDataURL("image/png");
                         photo.setAttribute("src", data);
+
+                        let data_status = $('<p>').text('data status = ' + data.toString());
+                        $('#debug-console').empty().append(data_status);
                     } catch (err) {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
