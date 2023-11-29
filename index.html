@@ -127,6 +127,8 @@
             photo = document.getElementById("photo");
             startbutton = document.getElementById("startbutton");
 
+            clearphoto();
+
             function startup() {
                 navigator.mediaDevices.getUserMedia({
                     video: {
@@ -164,12 +166,11 @@
                         let source_rect = $('<p>').text('source=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
                         let display_rect = $('<p>').text('offset=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString());
                         let screen_width_text = $('<p>').text('screen-width=' + screen.width.toString());
-                        $('#debug-console').append(source_rect).append(display_rect).append(screen_width_text);
+                        $('#debug-console').empty().append(source_rect).append(display_rect).append(screen_width_text);
 
                     },
                     false,
                 );
-                clearphoto();
 
                 startbutton.addEventListener(
                     "click",
@@ -202,17 +203,22 @@
             function takepicture() {
                 const context = canvas.getContext("2d");
                 if (streaming) {
-                    stream = false;
-                    video.pause();
-                    context.drawImage(video, 0, 0);
-                    $('#video').hide();
-                    $('#photo').show();
-                    $('#startbutton').text('重新拍攝');
-                    $('#canvas').width(video.videoWidth).height(video.videoHeight);
-                    $('#photo').width(video.offsetWidth).height(video.offsetHeight);
+                    try {
+                        stream = false;
+                        video.pause();
+                        context.drawImage(video, 0, 0);
+                        $('#video').hide();
+                        $('#photo').show();
+                        $('#startbutton').text('重新拍攝');
+                        $('#canvas').width(video.videoWidth).height(video.videoHeight);
+                        $('#photo').width(video.offsetWidth).height(video.offsetHeight);
 
-                    const data = canvas.toDataURL("image/png");
-                    photo.setAttribute("src", data);
+                        const data = canvas.toDataURL("image/png");
+                        photo.setAttribute("src", data);
+                    } catch (err) {
+                        let err_message = $('<p>').text('error message = ' + err.toString());
+                        $('#debug-console').empty().append(err_message);
+                    }
                 }
                 else {
                     stream = true;
