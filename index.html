@@ -228,7 +228,7 @@
                         let canvas_status = $('<p>').text('canvas status=' + canvas.width.toString() + ',' + canvas.height.toString());
                         let photo_status = $('<p>').text('photo status = ' + photo.width.toString() + ',' +  + photo.height.toString());
                         let data_contents = $('<p>').text('data contents = ' + data.toString());
-                        $('#debug-console').empty().append(source_rect).append(display_rect).append(photo_status).append(data_contents);
+                        $('#debug-console').empty().append(source_rect).append(canvas_status).append(photo_status).append(data_contents);
                     } catch (err) {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
