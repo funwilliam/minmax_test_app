@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-tw">
 
 <head>
     <meta charset="UTF-8">
@@ -29,7 +29,6 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            border: 1px solid black;
             box-shadow: 2px 2px 3px black;
         }
 
@@ -39,11 +38,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            border: 1px solid black;
             box-shadow: 2px 2px 3px black;
         }
 
         #video {
+            display: none;
             max-width: 100%;
         }
 
@@ -53,7 +52,7 @@
         }
 
         #startbutton {
-            display: block;
+            display: none;
             position: absolute;
             /* 修改：绝对定位 */
             left: 50%;
@@ -98,8 +97,8 @@
 
     <script>
         (() => {
-            // The width and height of the captured photo. We will set the
-            // width to the value defined here, but the height will be
+            // The block_width and blocl_height of the captured photo. We will set the
+            // block_width to the value defined here, but the blocl_height will be
             // calculated based on the aspect ratio of the input stream.
 
             let screen_width = window.innerWidth;
@@ -160,6 +159,8 @@
                             // $('#photo').width(width).height(height);
                             streaming = true;
                         }
+                        video.show();
+                        startbutton.show();
                         canvas.width = video.videoWidth;
                         canvas.height = video.videoHeight;
                         let canvas_status = $('<p>').text('canvas status=' + canvas.width.toString() + ',' + canvas.height.toString());
