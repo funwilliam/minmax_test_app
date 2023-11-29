@@ -176,10 +176,9 @@
                     },
                     audio: false
                 }).then((stream) => {
-                    $('#debug-console').text('sourceWidth=' + stream.toString() + ' sourceHeight=' + stream.toString());
-                    
                     video.srcObject = stream;
                     video.play();
+                    $('#debug-console').text('sourceWidth=' + video.videoWidth.toString() + ' sourceHeight=' + video.videoHeight.toString() + 'offset=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString());
                 }).catch((err) => {
                     console.error(`An error occurred: ${err}`);
                 });
