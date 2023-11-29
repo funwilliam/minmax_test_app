@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json">
     <link rel="icon" href="image/icon.svg">
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
         integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
@@ -32,7 +33,7 @@
             border: 1px solid black;
             box-shadow: 2px 2px 3px black;
         }
-        
+
         .output {
             max-width: 100%;
             margin: auto;
@@ -53,10 +54,14 @@
 
         #startbutton {
             display: block;
-            position: absolute; /* 修改：绝对定位 */
-            left: 50%; /* 新增：水平居中 */
-            transform: translateX(-50%); /* 新增：精确居中调整 */
-            bottom: 5%; /* 修改：相对于父元素底部的位置 */
+            position: absolute;
+            /* 修改：绝对定位 */
+            left: 50%;
+            /* 新增：水平居中 */
+            transform: translateX(-50%);
+            /* 新增：精确居中调整 */
+            bottom: 5%;
+            /* 修改：相对于父元素底部的位置 */
             background-color: rgba(0, 150, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.7);
             box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
@@ -106,6 +111,7 @@
             // video from the camera. Obviously, we start at false.
 
             let streaming = false;
+            let init_google = false;
 
             // The various HTML elements we need to configure or control. These
             // will be set by the startup() function.
@@ -118,6 +124,7 @@
             let sourceHeight = null;
             let sourceX = null;
             let sourceY = null;
+            let drive = null;
 
             video = document.getElementById("video");
             canvas = document.getElementById("canvas");
@@ -142,7 +149,7 @@
                         sourceX = (video.videoWidth - sourceWidth) / 2;
                         sourceY = 0;
                     }
-                    let rate = (100 * sourceWidth/ width).toString() + '%';
+                    let rate = (100 * sourceWidth / width).toString() + '%';
                     height = video.videoHeight / (video.videoWidth / width);
                     if (isNaN(height)) {
                         height = 4 * width / 3; // 寬:高=3:4
@@ -165,7 +172,7 @@
                 navigator.mediaDevices.getUserMedia({
                     video: {
                         facingMode: "environment",
-                        frameRate: {min: 10, max: 120},
+                        frameRate: { min: 10, max: 120 },
                         width: 1920,
                         height: 1080
                     },
@@ -181,9 +188,9 @@
                     "canplay",
                     (ev) => {
                         if (!streaming) {
-                            
+
                             height = video.videoHeight / (video.videoWidth / width);
-                            
+
                             // Firefox currently has a bug where the height can't be read from
                             // the video, so we will make assumptions if this happens.
 
@@ -238,14 +245,64 @@
 
                     const data = canvas.toDataURL("image/png");
                     photo.setAttribute("src", data);
+                    uploadFile(data)
                 }
-                // else if (width && height) {
-                    
-                // } 
                 else {
                     clearphoto();
                 }
-                
+
+            }
+
+            function google_client_init() {
+                const { google } = require('googleapis');
+
+                // 加载服务账户密钥
+                const serviceAccount = require('service-account.json');
+
+                // 配置JWT客户端
+                const jwtClient = new google.auth.JWT(
+                    serviceAccount.client_email,
+                    null,
+                    serviceAccount.private_key,
+                    ['https://www.googleapis.com/auth/drive'],
+                    null
+                );
+
+                // Google Drive API
+                drive = google.drive({ version: 'v3', auth: jwtClient });
+            }
+
+            // 上传文件
+            function uploadFile(fileContent) {
+                if (!init_google) {
+                    google_client_init()
+                    init_google = true
+                }
+                if (drive) {
+                    const fileMetadata = {
+                        'name': `${Date().getTime()}.png`, // 文件名
+                    };
+                    const media = {
+                        mimeType: 'image/png',
+                        body: fileContent // 文件内容
+                    };
+
+                    drive.files.create({
+                        resource: fileMetadata,
+                        media: media,
+                        fields: 'id'
+                    }, (err, file) => {
+                        if (err) {
+                            // 处理错误
+                            console.error(err);
+                        } else {
+                            console.log('File Id:', file.id);
+                        }
+                    });
+                }
+                else {
+                    console.log('google 客戶端建立失敗，無法上傳檔案')
+                }
             }
 
             // Set up our event listener to run the startup process
