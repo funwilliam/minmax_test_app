@@ -189,6 +189,7 @@
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 canvas.width = 0;
                 canvas.height = 0;
+                $('#photo').empty()
             }
 
             // Capture a photo by fetching the current contents of the video
@@ -227,8 +228,7 @@
                         let source_rect = $('<p>').text('source=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
                         let canvas_status = $('<p>').text('canvas status=' + canvas.width.toString() + ',' + canvas.height.toString());
                         let photo_status = $('<p>').text('photo status = ' + photo.width.toString() + ',' + + photo.height.toString());
-                        let data_status = $('<p>').text('data status = ' + data.to);
-                        $('#debug-console').empty().append(source_rect).append(canvas_status).append(photo_status).append(data_status);
+                        $('#debug-console').empty().append(source_rect).append(canvas_status).append(photo_status);
                     } catch (err) {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
