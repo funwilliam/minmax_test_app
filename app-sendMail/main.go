@@ -8,9 +8,11 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/gmail/v1"
+	"google.golang.org/api/option"
 )
 
 type UploadData struct {
@@ -21,18 +23,42 @@ type UploadData struct {
 const serviceAccountFile = "service-account.json"
 
 func enableCors(w *http.ResponseWriter) {
-	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+	(*w).Header().Set("Access-Control-Allow-Origin", "https://funwilliam.github.io")
 	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
 
-func sendMail(service *gmail.Service, from, to, subject, bodyMessage string) error {
+func sendMail(service *gmail.Service, from, to, subject, bodyMessage, base64Image string) error {
 	var message gmail.Message
 
-	emailBody := fmt.Sprintf("Subject: %s\n\n%s\n\nAttached Image:\n%s", subject, bodyMessage, bodyMessage)
+	// MIME邮件头部和正文
+	header := make(map[string]string)
+	header["From"] = from
+	header["To"] = to
+	header["Subject"] = subject
+	header["MIME-Version"] = "1.0"
+	header["Content-Type"] = "multipart/mixed; boundary=boundary"
+
+	var msg strings.Builder
+	for k, v := range header {
+		msg.WriteString(fmt.Sprintf("%s: %s\r\n", k, v))
+	}
+
+	// 正文部分
+	msg.WriteString("--boundary\r\n")
+	msg.WriteString("Content-Type: text/plain; charset=utf-8\r\n\r\n")
+	msg.WriteString(bodyMessage + "\r\n")
+
+	// 图像附件
+	msg.WriteString("--boundary\r\n")
+	msg.WriteString("Content-Type: image/png\r\n")
+	msg.WriteString("Content-Transfer-Encoding: base64\r\n")
+	msg.WriteString("Content-Disposition: attachment; filename=\"image.png\"\r\n\r\n")
+	msg.WriteString(base64Image + "\r\n")
+	msg.WriteString("--boundary--")
 
 	// Base64 encode the email
-	message.Raw = base64.URLEncoding.EncodeToString([]byte(emailBody))
+	message.Raw = base64.URLEncoding.EncodeToString([]byte(msg.String()))
 
 	// Send the message
 	_, err := service.Users.Messages.Send("me", &message).Do()
@@ -56,7 +82,7 @@ func createGmailService() (*gmail.Service, error) {
 	client := conf.Client(ctx)
 
 	// Create the Gmail client
-	return gmail.New(client)
+	return gmail.NewService(ctx, option.WithHTTPClient(client))
 }
 
 func uploadHandler(w http.ResponseWriter, r *http.Request, gmailService *gmail.Service) {
@@ -83,7 +109,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request, gmailService *gmail.S
 	fmt.Printf("Received image: %s\n", data.Image)
 
 	// Send email using Gmail API
-	if err := sendMail(gmailService, "your-email@gmail.com", "recipient-email@example.com", "測試", data.Text); err != nil {
+	if err := sendMail(gmailService, "id-001@cloud-notify-sys.iam.gserviceaccount.com", "minmax.ed.notification.sys@gmail.com", "測試", data.Text, data.Image); err != nil {
 		log.Printf("Failed to send email: %v\n", err)
 		http.Error(w, "Failed to send email", http.StatusInternalServerError)
 		return
