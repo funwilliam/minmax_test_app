@@ -144,7 +144,7 @@
 
             let figure = null;
 
-            let server_ip = '52.41.36.82:443'
+            let server_rul = ' https://minmax-notification-sys.onrender.com'
 
             video = document.getElementById("video");
             canvas = document.getElementById("canvas");
@@ -218,7 +218,7 @@
                             let data = { text: '123', image: figure };
 
                             $.ajax({
-                                url: `https://${server_ip}`,
+                                url: server_rul,
                                 type: 'POST',
                                 contentType: 'json',
                                 data: JSON.stringify(data),
