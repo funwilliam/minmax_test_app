@@ -46,6 +46,6 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", uploadHandler)
-	fmt.Println("Server started at :80")
-	http.ListenAndServe(":80", nil)
+	fmt.Println("Server started at :443")
+	http.ListenAndServe(":443", nil)
 }
