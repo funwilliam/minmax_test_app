@@ -39,7 +39,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
 	fmt.Printf("Received text: %s\n", data.Text)
-	fmt.Printf("Received image: v")
+	fmt.Printf("Received image: %s\n", data.Image)
 
 	fmt.Fprintf(w, "Received text and image")
 }

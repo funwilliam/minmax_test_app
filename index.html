@@ -213,9 +213,10 @@
                 upload_btn.addEventListener(
                     "click",
                     (ev) => {
-                        if (true) {
+                        let constrain = true;
+                        if (constrain) {
                             let text = $('#stmt').text();
-                            let data = { text: '123', image: figure };
+                            let data = { text: text, image: figure };
 
                             $.ajax({
                                 url: server_rul,
