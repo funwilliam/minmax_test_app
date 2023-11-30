@@ -1,0 +1,51 @@
+# 编译生成的文件
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.o
+
+# Go构建文件夹
+bin/
+pkg/
+
+# 依赖目录
+vendor/
+
+# VS Code 设置
+.vscode/
+
+# Mac系统生成的文件
+.DS_Store
+
+# Windows系统生成的文件
+Thumbs.db
+Desktop.ini
+
+# Node.js 前端项目常见文件
+# 依赖目录
+node_modules/
+
+# 构建输出
+/dist
+
+# 本地env文件
+.env
+.env.local
+
+# 日志文件
+*.log
+*.csv
+
+# IDE/编辑器特定文件
+.idea/
+*.swp
+*.swo
+*~
+
+# 临时文件
+tmp/
+temp/

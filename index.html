@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="image/icon.svg">
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
-        integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <title>捷拓工程部品異及時通知系統</title>
     <style>
         .container {
@@ -80,7 +80,7 @@
         }
 
         #upload_btn {
-            display: none;
+            display: flex;
             align-items: center;
             position: relative;
             max-width: 50%;
@@ -143,6 +143,8 @@
             let shooting_btn = null;
 
             let figure = null;
+
+            let server_ip = 'localhost:80'
 
             video = document.getElementById("video");
             canvas = document.getElementById("canvas");
@@ -211,14 +213,14 @@
                 upload_btn.addEventListener(
                     "click",
                     (ev) => {
-                        if (figure) {
+                        if (true) {
                             let text = $('#stmt').text();
-                            let data = { text: text, image: figure};
+                            let data = { text: '123', image: figure };
 
                             $.ajax({
-                                url: 'http://52.41.36.82:80',
+                                url: `http://${server_ip}`,
                                 type: 'POST',
-                                contentType: 'application/json',
+                                contentType: 'json',
                                 data: JSON.stringify(data),
                                 success: function (responds) {
                                     console.log('Success:', responds);
