@@ -1,39 +1,42 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-func handleUpload(w http.ResponseWriter, r *http.Request) {
+// 创建一个结构体来匹配前端发送的JSON数据
+type UploadData struct {
+	Text  string `json:"text"`
+	Image string `json:"image"`
+}
+
+func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Error(w, "Only POST method is allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	// 解析表单数据
-	if err := r.ParseMultipartForm(10 << 20); err != nil { // 10 MB
-		http.Error(w, "Error parsing form data", http.StatusBadRequest)
-		return
-	}
-
-	// 提取图片和字符串
-	file, _, err := r.FormFile("image")
+	var data UploadData
+	// 解析JSON数据
+	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
-		http.Error(w, "Error retrieving image", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	defer file.Close()
+	defer r.Body.Close()
 
-	message := r.FormValue("message")
+	// 处理数据（例如打印到控制台）
+	fmt.Printf("Received text: %s\n", data.Text)
+	fmt.Printf("Received image: %s\n", data.Image)
 
-	// TODO: 实现发送邮件的逻辑
-
-	fmt.Fprintf(w, "File and message received. Message: %s", message)
+	// 发送响应回前端
+	fmt.Fprintf(w, "Received text and image")
 }
 
 func main() {
-	http.HandleFunc("/upload", handleUpload)
-	fmt.Println("Server started at :8080")
-	http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/", uploadHandler)
+	fmt.Println("Server started at :80")
+	http.ListenAndServe(":80", nil)
 }

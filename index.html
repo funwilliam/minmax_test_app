@@ -75,17 +75,15 @@
         #stmt {
             max-width: 100%;
             display: none;
+            align-items: center;
             position: relative;
         }
 
         #upload_btn {
             display: none;
+            align-items: center;
             position: relative;
             max-width: 50%;
-            left: 50%;
-            /* 水平居中 */
-            transform: translateX(-50%);
-            /* 精确居中调整 */
             background-color: rgba(0, 150, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.7);
             border-radius: 5px;
@@ -218,7 +216,7 @@
                             let data = { text: text, image: figure};
 
                             $.ajax({
-                                url: 'http://您的后端服务URL/upload',
+                                url: 'http://localhost:80',
                                 type: 'POST',
                                 contentType: 'application/json',
                                 data: JSON.stringify(data),
