@@ -31,17 +31,20 @@
             margin: auto;
         }
 
-        h1, h2 {
+        .custom-title, .custom-subtitle {
+            text-align: left; /* 文字左對齊 */
+            margin: 0; /* 移除邊距 */
+            padding: 0; /* 移除內邊距 */
             max-width: 100%; /* 限制最大寬度 */
-            text-align: left;
             word-wrap: break-word; /* 確保文字不會超出容器寬度 */
         }
 
-        h1 {
-            font-size: 6vw;
+        .custom-title {
+            font-size: 6vw; /* 或其他您希望的大小 */
         }
-        h2 {
-            font-size: 5vw; /* 設定基於視口寬度的字體大小 */
+
+        .custom-subtitle {
+            font-size: 5vw; /* 或其他您希望的大小 */
         }
 
         p {
@@ -54,7 +57,7 @@
 
         @media (min-width: 768px) {
             /* 針對較大螢幕的媒體查詢 */
-            h1, h2 {
+            .custom-title, .custom-subtitle {
                 font-size: 40px; /* 在大螢幕上使用較大的固定字體大小 */
             }
             p {
@@ -144,8 +147,8 @@
 <body>
     <div class="container">
         <div class="contentarea">
-            <h1>捷拓工程部</h1>
-            <h2>品質異常及時通知系統</h2>
+            <div class="custom-title">捷拓工程部</div>
+            <div class="custom-subtitle">品質異常及時通知系統</div>
             <p>請使用下方相機進行拍攝</p>
             <br>
             <div class="camera">
