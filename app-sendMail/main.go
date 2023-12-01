@@ -95,7 +95,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to send email", http.StatusInternalServerError)
 		return
 	}
-
+	log.Printf("Email sent successfully")
 	fmt.Fprintf(w, "Email sent successfully")
 }
 
