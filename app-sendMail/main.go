@@ -40,28 +40,28 @@ func sendMail(login, password, to, subject, body, base64Image string) error {
 	auth := smtp.PlainAuth("", login, password, smtpHost)
 
 	// 构建邮件内容
-	newMail, _ := replaceDomain(login, "smtpHost")
-	msg := "From: " + newMail + "\n" +
-		"To: " + to + "\n" +
-		"Subject: " + subject + "\n" +
-		"MIME-Version: 1.0\n" +
-		"Content-Type: multipart/mixed; boundary=boundary\n\n" +
-		"--boundary\n" +
-		"Content-Type: text/plain; charset=utf-8\n\n" +
-		body + "\n"
+	// newMail, _ := replaceDomain(login, "smtpHost")
+	// msg := "From: " + newMail + "\n" +
+	// 	"To: " + to + "\n" +
+	// 	"Subject: " + subject + "\n" +
+	// 	"MIME-Version: 1.0\n" +
+	// 	"Content-Type: multipart/mixed; boundary=boundary\n\n" +
+	// 	"--boundary\n" +
+	// 	"Content-Type: text/plain; charset=utf-8\n\n" +
+	// 	body + "\n"
 
-	// 添加图片附件
-	if base64Image != "" {
-		msg += "--boundary\n" +
-			"Content-Type: image/png\n" +
-			"Content-Transfer-Encoding: base64\n" +
-			"Content-Disposition: attachment; filename=\"image.png\"\n\n" +
-			base64Image + "\n" +
-			"--boundary--"
-	}
+	// // 添加图片附件
+	// if base64Image != "" {
+	// 	msg += "--boundary\n" +
+	// 		"Content-Type: image/png\n" +
+	// 		"Content-Transfer-Encoding: base64\n" +
+	// 		"Content-Disposition: attachment; filename=\"image.png\"\n\n" +
+	// 		base64Image + "\n" +
+	// 		"--boundary--"
+	// }
 
-	// 发送邮件
-	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, newMail, []string{to}, []byte(msg))
+	// // 发送邮件
+	// err := smtp.SendMail(smtpHost+":"+smtpPort, auth, newMail, []string{to}, []byte(msg))
 	return err
 }
 
@@ -89,10 +89,10 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	base64Image := strings.TrimPrefix(data.Image, "data:image/png;base64,")
 
 	// SMTP 配置
-	login := "	minmax.ed.notification.sys@gmail.com" // 更改为您的 Gmail 地址
-	password := os.Getenv("SMTP_PASS")               // Gmail 密码或应用专用密码
-	to := "minmax.ed.notification.sys@gmail.com"     // 更改为收件人地址
-	subject := "測試"                                  // 邮件主题
+	login := "minmax.ed.notification.sys@gmail.com" // 更改为您的 Gmail 地址
+	password := os.Getenv("SMTP_PASS")              // Gmail 密码或应用专用密码
+	to := "minmax.ed.notification.sys@gmail.com"    // 更改为收件人地址
+	subject := "測試"                                 // 邮件主题
 
 	if err := sendMail(login, password, to, subject, data.Text, base64Image); err != nil {
 		log.Printf("Failed to send email: %v\n", err)
