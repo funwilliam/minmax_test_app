@@ -70,22 +70,6 @@
             word-wrap: break-word; /* 確保文字不會超出容器寬度 */
         }
 
-        @media (min-width: 768px) {
-            /* 針對較大螢幕的媒體查詢 */
-            .custom-title {
-                font-size: 40px; /* 在大螢幕上使用較大的固定字體大小 */
-            }
-            .custom-subtitle {
-                font-size: 36px; /* 在大螢幕上使用較大的固定字體大小 */
-            }
-            .func1-title {
-                font-size: 30px;
-            }
-            p {
-                font-size: 28px; /* 在大螢幕上使用較大的固定字體大小 */
-            }
-        }
-
         .camera {
             max-width: 100%;
             margin: auto;
@@ -159,8 +143,35 @@
             color: rgba(255, 255, 255, 1);
         }
 
+        .foot {
+            position: fixed; /* 固定定位 */
+            bottom: 5%; /* 距離頁面底部 5% */
+            left: 0; /* 左對齊 */
+            width: 100%; /* 元素寬度為整個視口的寬度 */
+            text-align: center; /* 文字居中 */
+        }
+
         #canvas {
             display: none;
+        }
+        
+        @media (min-width: 768px) {
+            /* 針對較大螢幕的媒體查詢 */
+            .custom-title {
+                font-size: 40px; /* 在大螢幕上使用較大的固定字體大小 */
+            }
+            .custom-subtitle {
+                font-size: 36px; /* 在大螢幕上使用較大的固定字體大小 */
+            }
+            #func1-title {
+                font-size: 30px;
+            }
+            .foot {
+                font-size: 30px;
+            }
+            p {
+                font-size: 28px; /* 在大螢幕上使用較大的固定字體大小 */
+            }
         }
     </style>
 </head>
@@ -184,7 +195,7 @@
                 <button id="upload_btn">送出</button>
                 <div id="debug-console"></div>
                 <br>
-                <p>Copyright © 2023 捷拓科技-工程部 昱展</p>
+                <div class="foot">Copyright © 2023 捷拓科技-工程部 昱展</div>
             </dl>
         </section>
     </div>
