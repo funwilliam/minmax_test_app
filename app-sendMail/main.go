@@ -43,8 +43,8 @@ func sendMail(login, password, to, subject, body, base64Image string) error {
 	boundary := "my_unique_boundary"
 
 	// 构建邮件内容
-	newMail, _ := replaceDomain(login, "minmax.com.tw")
-	msg := "From: " + newMail + "\n" +
+	from := "William@minmax.com.tw"
+	msg := "From: " + from + "\n" +
 		"To: " + to + "\n" +
 		"Subject: " + subject + "\n" +
 		"MIME-Version: 1.0\n" +
@@ -66,7 +66,7 @@ func sendMail(login, password, to, subject, body, base64Image string) error {
 	msg += "--" + boundary + "--"
 
 	// 发送邮件
-	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, newMail, []string{to}, []byte(msg))
+	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, []string{to}, []byte(msg))
 	return err
 }
 
