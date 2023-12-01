@@ -41,6 +41,7 @@ func sendMail(login, password, to, subject, body, base64Image string) error {
 
 	// 构建邮件内容
 	newMail, _ := replaceDomain(login, smtpHost)
+	newMail = "William@minmax.com.tw"
 	msg := "From: " + newMail + "\n" +
 		"To: " + to + "\n" +
 		"Subject: " + subject + "\n" +
