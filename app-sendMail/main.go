@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"net/smtp"
 	"os"
-	"regexp"
 	"strings"
 )
 
@@ -26,14 +25,6 @@ func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "https://funwilliam.github.io")
 	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
 	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
-}
-
-func replaceDomain(email, newDomain string) (string, error) {
-	re, err := regexp.Compile(`@[^@]+$`)
-	if err != nil {
-		return "", err
-	}
-	return re.ReplaceAllString(email, "@"+newDomain), nil
 }
 
 func sendMail(login, password, to, subject, body, base64Image string) error {
@@ -96,7 +87,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	// SMTP 配置
 	login := "minmax.ed.notification.sys@gmail.com" // 更改为您的 Gmail 地址
 	password := os.Getenv("SMTP_PASS")              // Gmail 密码或应用专用密码
-	to := "William@minmax.com.tw"                   // 更改为收件人地址
+	to := "minmax.ed.notification.sys@gmail.com"    // 更改为收件人地址
 	subject := "測試"                                 // 邮件主题
 
 	if err := sendMail(login, password, to, subject, data.Text, base64Image); err != nil {
