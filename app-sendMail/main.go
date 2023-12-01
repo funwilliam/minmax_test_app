@@ -61,7 +61,7 @@ func sendMail(login, password, to, subject, body, base64Image string) error {
 	}
 
 	// 发送邮件
-	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, []string{to}, []byte(msg))
+	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, newMail, []string{to}, []byte(msg))
 	return err
 }
 
