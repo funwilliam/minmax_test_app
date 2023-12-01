@@ -83,6 +83,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 
 	// 处理 Base64 图像数据
 	base64Image := strings.TrimPrefix(data.Image, "data:image/png;base64,")
+	note := data.Text
 
 	// SMTP 配置
 	login := "minmax.ed.notification.sys@gmail.com" // 更改为您的 Gmail 地址
@@ -90,12 +91,12 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	to := "minmax.ed.notification.sys@gmail.com"    // 更改为收件人地址
 	subject := "測試"                                 // 邮件主题
 
-	if err := sendMail(login, password, to, subject, data.Text, base64Image); err != nil {
+	if err := sendMail(login, password, to, subject, note, base64Image); err != nil {
 		log.Printf("Failed to send email: %v\n", err)
 		http.Error(w, "Failed to send email", http.StatusInternalServerError)
 		return
 	}
-	log.Printf(data.Text)
+	log.Printf(note)
 	log.Printf("Email sent successfully")
 	fmt.Fprintf(w, "Email sent successfully")
 }
