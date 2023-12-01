@@ -368,6 +368,8 @@
                     $('#photo').hide();
                     $('#video').show();
                     $('#shooting_btn').text('拍攝照片');
+                    $('#stmt').hide();
+                    $('#upload_btn').hide();
                     video.play().then(() => {
                         // let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
                         // let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
