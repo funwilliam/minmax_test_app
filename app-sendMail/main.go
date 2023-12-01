@@ -40,28 +40,28 @@ func sendMail(login, password, to, subject, body, base64Image string) error {
 	auth := smtp.PlainAuth("", login, password, smtpHost)
 
 	// 构建邮件内容
-	// newMail, _ := replaceDomain(login, "smtpHost")
-	// msg := "From: " + newMail + "\n" +
-	// 	"To: " + to + "\n" +
-	// 	"Subject: " + subject + "\n" +
-	// 	"MIME-Version: 1.0\n" +
-	// 	"Content-Type: multipart/mixed; boundary=boundary\n\n" +
-	// 	"--boundary\n" +
-	// 	"Content-Type: text/plain; charset=utf-8\n\n" +
-	// 	body + "\n"
+	newMail, _ := replaceDomain(login, smtpHost)
+	msg := "From: " + newMail + "\n" +
+		"To: " + to + "\n" +
+		"Subject: " + subject + "\n" +
+		"MIME-Version: 1.0\n" +
+		"Content-Type: multipart/mixed; boundary=boundary\n\n" +
+		"--boundary\n" +
+		"Content-Type: text/plain; charset=utf-8\n\n" +
+		body + "\n"
 
-	// // 添加图片附件
-	// if base64Image != "" {
-	// 	msg += "--boundary\n" +
-	// 		"Content-Type: image/png\n" +
-	// 		"Content-Transfer-Encoding: base64\n" +
-	// 		"Content-Disposition: attachment; filename=\"image.png\"\n\n" +
-	// 		base64Image + "\n" +
-	// 		"--boundary--"
-	// }
+	// 添加图片附件
+	if base64Image != "" {
+		msg += "--boundary\n" +
+			"Content-Type: image/png\n" +
+			"Content-Transfer-Encoding: base64\n" +
+			"Content-Disposition: attachment; filename=\"image.png\"\n\n" +
+			base64Image + "\n" +
+			"--boundary--"
+	}
 
-	// // 发送邮件
-	// err := smtp.SendMail(smtpHost+":"+smtpPort, auth, newMail, []string{to}, []byte(msg))
+	// 发送邮件
+	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, newMail, []string{to}, []byte(msg))
 	return err
 }
 
