@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/smtp"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -27,11 +28,20 @@ func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Headers", "Content-Type")
 }
 
-func sendMail(from, password, to, subject, body, base64Image string) error {
-	auth := smtp.PlainAuth("", from, password, smtpHost)
+func replaceDomain(email, newDomain string) (string, error) {
+	re, err := regexp.Compile(`@[^@]+$`)
+	if err != nil {
+		return "", err
+	}
+	return re.ReplaceAllString(email, "@"+newDomain), nil
+}
+
+func sendMail(login, password, to, subject, body, base64Image string) error {
+	auth := smtp.PlainAuth("", login, password, smtpHost)
 
 	// 构建邮件内容
-	msg := "From: " + from + "\n" +
+	newMail, _ := replaceDomain(login, "smtpHost")
+	msg := "From: " + newMail + "\n" +
 		"To: " + to + "\n" +
 		"Subject: " + subject + "\n" +
 		"MIME-Version: 1.0\n" +
@@ -79,12 +89,12 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	base64Image := strings.TrimPrefix(data.Image, "data:image/png;base64,")
 
 	// SMTP 配置
-	from := "	minmax.ed.notification.sys@gmail.com" // 更改为您的 Gmail 地址
-	password := os.Getenv("SMTP_PASS")              // Gmail 密码或应用专用密码
-	to := "minmax.ed.notification.sys@gmail.com"    // 更改为收件人地址
-	subject := "測試"                                 // 邮件主题
+	login := "	minmax.ed.notification.sys@gmail.com" // 更改为您的 Gmail 地址
+	password := os.Getenv("SMTP_PASS")               // Gmail 密码或应用专用密码
+	to := "minmax.ed.notification.sys@gmail.com"     // 更改为收件人地址
+	subject := "測試"                                  // 邮件主题
 
-	if err := sendMail(from, password, to, subject, data.Text, base64Image); err != nil {
+	if err := sendMail(login, password, to, subject, data.Text, base64Image); err != nil {
 		log.Printf("Failed to send email: %v\n", err)
 		http.Error(w, "Failed to send email", http.StatusInternalServerError)
 		return
