@@ -22,18 +22,25 @@
         }
 
         .contentarea {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: block;
             font-size: 16px;
             font-family: "Lucida Grande";
             max-width: 75%;
             margin: auto;
         }
 
+        .head {
+            align-self: flex-start; /* 在交叉軸上靠左對齊 */
+        }
+
+        #func1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
         .custom-title, .custom-subtitle {
             font-weight: bold;
-            align-self: flex-start; /* 在交叉軸上靠左對齊 */
             margin: 0px; /* 移除邊距 */
             max-width: 100%; /* 限制最大寬度 */
             word-wrap: break-word; /* 確保文字不會超出容器寬度 */
@@ -47,6 +54,14 @@
             font-size: 5vw; /* 或其他您希望的大小 */
         }
 
+        .func1-title {
+            font-size: 4.5vw; /* 設定基於視口寬度的字體大小 */
+            max-width: 95%; /* 限制最大寬度 */
+            align-self: flex-start; /* 在交叉軸上靠左對齊 */
+            margin: 1em 0px; /* 水平居中 */
+            word-wrap: break-word; /* 確保文字不會超出容器寬度 */
+        }
+        
         p {
             font-size: 4vw; /* 設定基於視口寬度的字體大小 */
             max-width: 95%; /* 限制最大寬度 */
@@ -62,6 +77,9 @@
             }
             .custom-subtitle {
                 font-size: 36px; /* 在大螢幕上使用較大的固定字體大小 */
+            }
+            .func1-title {
+                font-size: 30px;
             }
             p {
                 font-size: 28px; /* 在大螢幕上使用較大的固定字體大小 */
@@ -149,23 +167,26 @@
 
 <body>
     <div class="container">
-        <div class="contentarea">
-            <div class="custom-title">捷拓工程部</div>
-            <div class="custom-subtitle">品質異常及時通知系統</div>
-            <p>請使用下方相機進行拍攝</p>
-            <br>
-            <div class="camera">
-                <video id="video" autoplay="true" playsinline>影片串流目前不可用。</video>
-                <img id="photo" alt="拍攝到的圖像" />
-                <button id="shooting_btn">拍攝照片</button>
+        <section class="contentarea">
+            <div class="head">
+                <div class="custom-title">捷拓&emsp;工程部</div>
+                <div class="custom-subtitle">品質異常及時通知系統</div>
             </div>
-            <br>
-            <input type="text" id="stmt" placeholder="請描述一下這張照片 (Optional)">
-            <button id="upload_btn">送出</button>
-            <div id="debug-console"></div>
-            <br>
-            <p>Copyright © 2023 捷拓科技-工程部 昱展</p>
-        </div>
+            <dl id="func1">
+                <div class="func1-title">請使用下方相機進行拍攝</div>
+                <div class="camera">
+                    <video id="video" autoplay="true" playsinline>影片串流目前不可用。</video>
+                    <img id="photo" alt="拍攝到的圖像" />
+                    <button id="shooting_btn">拍攝照片</button>
+                </div>
+                <br>
+                <input type="text" id="stmt" placeholder="請描述一下這張照片 (Optional)">
+                <button id="upload_btn">送出</button>
+                <div id="debug-console"></div>
+                <br>
+                <p>Copyright © 2023 捷拓科技-工程部 昱展</p>
+            </dl>
+        </section>
     </div>
     <canvas id="canvas"></canvas>
 
