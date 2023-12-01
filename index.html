@@ -16,9 +16,12 @@
         }
 
         .contentarea {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             font-size: 16px;
             font-family: "Lucida Grande", "Arial", sans-serif;
-            max-width: 70%;
+            max-width: 75%;
             margin: auto;
         }
 
@@ -73,17 +76,19 @@
         }
 
         #stmt {
-            max-width: 100%;
+            width: 100%;
             display: none;
+            margin: 10px auto;
             align-items: center;
             position: relative;
         }
 
         #upload_btn {
-            display: flex;
+            display: none;
             align-items: center;
             position: relative;
-            max-width: 50%;
+            width: 50%;
+            margin: 10px auto;
             background-color: rgba(0, 150, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.7);
             border-radius: 5px;
@@ -194,9 +199,9 @@
                         }
                         canvas.width = video.videoWidth;
                         canvas.height = video.videoHeight;
-                        let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
-                        let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
-                        $('#debug-console').empty().append(source_rect).append(display_rect);
+                        // let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
+                        // let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
+                        // $('#debug-console').empty().append(source_rect).append(display_rect);
                     },
                     false,
                 );
@@ -283,9 +288,9 @@
                         // downloadLink.click();
                         // document.body.removeChild(downloadLink);
 
-                        let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
-                        let display_rect = $('<p>').text('顯示框=' + photo.width.toString() + ',' + photo.height.toString() + ' , 螢幕寬=' + screen.width.toString());
-                        $('#debug-console').empty().append(source_rect).append(display_rect);
+                        // let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
+                        // let display_rect = $('<p>').text('顯示框=' + photo.width.toString() + ',' + photo.height.toString() + ' , 螢幕寬=' + screen.width.toString());
+                        // $('#debug-console').empty().append(source_rect).append(display_rect);
                     } catch (err) {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
@@ -298,9 +303,9 @@
                     $('#video').show();
                     $('#shooting_btn').text('拍攝照片');
                     video.play().then(() => {
-                        let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
-                        let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
-                        $('#debug-console').empty().append(source_rect).append(display_rect);
+                        // let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
+                        // let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
+                        // $('#debug-console').empty().append(source_rect).append(display_rect);
                     }).catch(err => {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
