@@ -12,8 +12,8 @@ import (
 
 // SMTP 服务器设置
 const (
-	smtpHost = "smtp.gmail.com"
-	smtpPort = "587"
+	smtpHost = "smtp-pulse.com"
+	smtpPort = "2525"
 )
 
 type UploadData struct {
