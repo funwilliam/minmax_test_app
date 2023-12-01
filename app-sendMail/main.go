@@ -79,10 +79,10 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	base64Image := strings.TrimPrefix(data.Image, "data:image/png;base64,")
 
 	// SMTP 配置
-	from := "minmax.ed.notification.sys@gmail.com" // 更改为您的 Gmail 地址
-	password := os.Getenv("SMTP_PASS")             // Gmail 密码或应用专用密码
-	to := "minmax.ed.notification.sys@gmail.com"   // 更改为收件人地址
-	subject := "測試"                                // 邮件主题
+	from := "	minmax.ed.notification.sys@gmail.com" // 更改为您的 Gmail 地址
+	password := os.Getenv("SMTP_PASS")              // Gmail 密码或应用专用密码
+	to := "minmax.ed.notification.sys@gmail.com"    // 更改为收件人地址
+	subject := "測試"                                 // 邮件主题
 
 	if err := sendMail(from, password, to, subject, data.Text, base64Image); err != nil {
 		log.Printf("Failed to send email: %v\n", err)
