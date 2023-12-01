@@ -12,11 +12,11 @@
     <title>捷拓工程部品異及時通知系統</title>
     <style>
         body {
-            font-family: 'Noto Sans TC', Arial, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'Nimbus Sans L', Arial, 'Liberation Sans', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans CN', 'Source Han Sans SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 'ST Heiti', SimHei, 'WenQuanYi Zen Hei Sharp', sans-serif;
+            font-family: 'Noto Sans TC', -apple-system, Arial, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'Nimbus Sans L', Arial, 'Liberation Sans', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans CN', 'Source Han Sans SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 'ST Heiti', SimHei, 'WenQuanYi Zen Hei Sharp', sans-serif;
         }
 
         .container {
-            padding-top: 8vh;
+            padding-top: 4vh;
             max-width: 1080px;
             margin: auto;
         }
@@ -31,23 +31,29 @@
             margin: auto;
         }
 
-        h2 {
-            font-size: 4.2vw; /* 設定基於視口寬度的字體大小 */
+        h1, h2 {
             max-width: 100%; /* 限制最大寬度 */
-            margin: 0 auto; /* 水平居中 */
+            align-items: left;
             word-wrap: break-word; /* 確保文字不會超出容器寬度 */
         }
 
+        h1 {
+            font-size: 6vw;
+        }
+        h2 {
+            font-size: 5vw; /* 設定基於視口寬度的字體大小 */
+        }
+
         p {
-            font-size: 3.8vw; /* 設定基於視口寬度的字體大小 */
-            max-width: 90%; /* 限制最大寬度 */
+            font-size: 4vw; /* 設定基於視口寬度的字體大小 */
+            max-width: 95%; /* 限制最大寬度 */
             margin: 0 auto; /* 水平居中 */
             word-wrap: break-word; /* 確保文字不會超出容器寬度 */
         }
 
         @media (min-width: 768px) {
             /* 針對較大螢幕的媒體查詢 */
-            h2 {
+            h1, h2 {
                 font-size: 40px; /* 在大螢幕上使用較大的固定字體大小 */
             }
             p {
@@ -137,7 +143,8 @@
 <body>
     <div class="container">
         <div class="contentarea">
-            <h2>捷拓工程部<br>品質異常及時通知系統</h2>
+            <h1>捷拓工程部</h1>
+            <h2>品質異常及時通知系統</h2>
             <p>請使用下方相機進行拍攝</p>
             <br>
             <div class="camera">
