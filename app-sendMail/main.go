@@ -39,27 +39,31 @@ func replaceDomain(email, newDomain string) (string, error) {
 func sendMail(login, password, to, subject, body, base64Image string) error {
 	auth := smtp.PlainAuth("", login, password, smtpHost)
 
+	// 使用更独特的边界标识符
+	boundary := "my_unique_boundary"
+
 	// 构建邮件内容
-	newMail, _ := replaceDomain(login, smtpHost)
-	newMail = "William@minmax.com.tw"
+	newMail, _ := replaceDomain(login, "minmax.com.tw")
 	msg := "From: " + newMail + "\n" +
 		"To: " + to + "\n" +
 		"Subject: " + subject + "\n" +
 		"MIME-Version: 1.0\n" +
-		"Content-Type: multipart/mixed; boundary=boundary\n\n" +
-		"--boundary\n" +
+		"Content-Type: multipart/mixed; boundary=" + boundary + "\n\n" +
+		"--" + boundary + "\n" +
 		"Content-Type: text/plain; charset=utf-8\n\n" +
-		body + "\n"
+		body + "\n\n"
 
 	// 添加图片附件
 	if base64Image != "" {
-		msg += "--boundary\n" +
+		msg += "--" + boundary + "\n" +
 			"Content-Type: image/png\n" +
 			"Content-Transfer-Encoding: base64\n" +
 			"Content-Disposition: attachment; filename=\"image.png\"\n\n" +
-			base64Image + "\n" +
-			"--boundary--"
+			base64Image + "\n\n"
 	}
+
+	// 邮件结束标识
+	msg += "--" + boundary + "--"
 
 	// 发送邮件
 	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, newMail, []string{to}, []byte(msg))
@@ -92,7 +96,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	// SMTP 配置
 	login := "minmax.ed.notification.sys@gmail.com" // 更改为您的 Gmail 地址
 	password := os.Getenv("SMTP_PASS")              // Gmail 密码或应用专用密码
-	to := "minmax.ed.notification.sys@gmail.com"    // 更改为收件人地址
+	to := "William@minmax.com.tw"                   // 更改为收件人地址
 	subject := "測試"                                 // 邮件主题
 
 	if err := sendMail(login, password, to, subject, data.Text, base64Image); err != nil {
