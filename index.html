@@ -11,30 +11,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
     <title>捷拓工程部品異及時通知系統</title>
     <style>
-        html, body {
-            margin: 0; /* 移除預設邊距 */
-            height: 100%; /* 確保佔滿整個視窗高度 */
-            display: flex;
-            flex-direction: column; /* 子元素垂直排列 */
+        body {
+            font-family: Jost, "Microsoft JhengHei", 微軟正黑體, 微软雅黑, sans-serif, 'Noto Sans TC', -apple-system, Arial, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'Nimbus Sans L', Arial, 'Liberation Sans', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans CN', 'Source Han Sans SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 'ST Heiti', SimHei, 'WenQuanYi Zen Hei Sharp', sans-serif;
+            margin: auto;
         }
 
         .container {
-            flex-grow: 1; /* 允許 container 元素佔據所有可用空間 */
             padding-top: 4vh;
             max-width: 1080px;
             margin: auto;
-            display: flex;
-            flex-direction: column; /* 子元素垂直排列 */
-            min-height: 0; /* 避免 flex item 撐開超過 viewport */
         }
 
         .contentarea {
             display: block;
             font-size: 16px;
             max-width: 75%;
+            min-height: 90vh; /* 確保主要內容區至少占滿*/
             margin: auto;
-            flex-grow: 1; /* 確保 contentarea 佔用所有可用空間 */
-            min-height: 0; /* 避免 flex item 撐開超過 viewport */
         }
 
         .head {
@@ -152,10 +145,14 @@
 
         .foot {
             font-weight: bold;
-            text-align: center;
-            background-color: white;
-            padding: 10px 0;
-            box-shadow: 0px -2px 5px rgba(0,0,0,0.1);
+            position: fixed; /* 固定定位 */
+            bottom: 3vh; /* 距離頁面底部3%螢幕高度 */
+            left: 0; /* 左對齊 */
+            width: 100%; /* 元素寬度為整個視口的寬度 */
+            text-align: center; /* 文字居中 */
+            background-color: white; /* 可根據需要調整背景色 */
+            padding: 10px 0; /* 上下內邊距，視需求調整 */
+            box-shadow: 0px -2px 5px rgba(0,0,0,0.1); /* 如有需要，添加陰影增加層次感 */
         }
 
         #canvas {
