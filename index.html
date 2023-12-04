@@ -21,38 +21,13 @@
             margin: 0;
         }
 
-        #func1 {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        
-        p {
-            font-size: 4vw; /* 設定基於視口寬度的字體大小 */
-            max-width: 95%; /* 限制最大寬度 */
-            text-align: middle;
-            margin: 0 auto; /* 水平居中 */
-            word-wrap: break-word; /* 確保文字不會超出容器寬度 */
-        }
-
-
-        .output {
-            max-width: 100%;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 2px 2px 3px black;
-        }
-
         #video, #photo {
             display: none;
             border: 1px solid black;
             max-width: 100%;
         }
         
-        #shooting_btn {
+        #shooting_btn, #upload_btn {
             display: none;
             left: 50%;
             transform: translateX(-50%);
@@ -62,6 +37,12 @@
             border: 1px solid rgba(255, 255, 255, 0.7); /* 浅白色边框 */
             box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
         }
+        #shooting_btn {
+            background-color: rgba(106, 130, 141, 0.7); /* 淡绿色，透明度设置为 0.7 */
+        }
+        #upload_btn {
+            background-color: rgba(0, 150, 0, 0.5);
+        }
 
         #camera {
             box-shadow: 2px 2px 3px black;
@@ -69,25 +50,6 @@
 
         #stmt {
             display: none;
-        }
-
-        #upload_btn {
-            display: none;
-            position: relative;
-            width: 50%;
-            margin: 10px auto;
-            background-color: rgba(0, 150, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: 5px;
-            box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
-            font-size: 25px;
-            color: rgba(255, 255, 255, 1);
-        }
-
-        #func2 {
-            display: none;
-            flex-direction: column;
-            align-items: flex-start; /* 在交叉軸上靠左對齊 */
         }
         
         #debug-console {
@@ -97,37 +59,8 @@
             width: 100%; /* 設定寬度為 100% */
         }
 
-        .navbar {
-            display: none;
-            font-weight: bold;
-            position: fixed; /* 固定定位 */
-            bottom: 3vh; /* 距離頁面底部3%螢幕高度 */
-            left: 0; /* 左對齊 */
-            width: 100%; /* 元素寬度為整個視口的寬度 */
-            text-align: center; /* 文字居中 */
-            background-color: white; /* 可根據需要調整背景色 */
-            padding: 10px 0; /* 上下內邊距，視需求調整 */
-            box-shadow: 0px -2px 5px rgba(0,0,0,0.1); /* 如有需要，添加陰影增加層次感 */
-        }
-
         #canvas {
             display: none;
-        }
-        
-        @media (min-width: 768px) {
-            /* 針對較大螢幕的媒體查詢 */
-            .custom-subtitle {
-                font-size: 36px; /* 在大螢幕上使用較大的固定字體大小 */
-            }
-            #func1-title {
-                font-size: 30px;
-            }
-            .navbar {
-                font-size: 30px;
-            }
-            p {
-                font-size: 28px; /* 在大螢幕上使用較大的固定字體大小 */
-            }
         }
     </style>
 </head>
@@ -149,8 +82,8 @@
                         <img id="photo" class="w-100 border" alt="拍攝到的圖像" />
                         <button id="shooting_btn" class="btn position-absolute">拍攝照片</button>
                     </div>
-                    <input type="text" id="stmt" class="form-control col-11 mt-5 mx-auto rounded" placeholder="請描述一下這張照片 (Optional)">
-                    <button id="upload_btn">送出</button>
+                    <input type="text" id="stmt" class="form-control col-11 my-3 mx-auto rounded" placeholder="請描述一下這張照片 (Optional)">
+                    <button id="upload_btn" class="btn position-absolute">送出</button>
                     <br>
                 </div>
                 <div class="row">
@@ -159,7 +92,7 @@
             </section>
         </div>
         <div class="row">
-            <footer class=" fixed-bottom w-100 py-3 text-center fw-bold bg-white shadow">Copyright © 2023 捷拓科技-工程部 昱展</footer>
+            <footer class="fixed-bottom w-100 py-3 text-center fw-bold bg-white shadow">Copyright © 2023 捷拓科技-工程部 昱展</footer>
         </div>
     </div>
     <canvas id="canvas"></canvas>
