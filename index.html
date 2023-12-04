@@ -9,45 +9,211 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="image/icon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" 
         integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 
     <title>捷拓工程部品異及時通知系統</title>
+    <style>
+        html, body {
+            font-family: Jost, "Microsoft JhengHei", 微軟正黑體, 微软雅黑, sans-serif, 'Noto Sans TC', -apple-system, Arial, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'Nimbus Sans L', Arial, 'Liberation Sans', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans CN', 'Source Han Sans SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 'ST Heiti', SimHei, 'WenQuanYi Zen Hei Sharp', sans-serif;
+            margin: 0;
+        }
+
+        .container {
+            padding-top: 4vh;
+            max-width: 1080px;
+            margin: auto;
+        }
+
+        .contentarea {
+            display: block;
+            font-size: 16px;
+            max-width: 75%;
+            margin: auto;
+        }
+
+        .head {
+            align-self: flex-start; /* 在交叉軸上靠左對齊 */
+        }
+
+        .custom-subtitle {
+            font-size: 5vw; /* 或其他您希望的大小 */
+            font-weight: bold;
+            margin: 0px; /* 移除邊距 */
+            max-width: 100%; /* 限制最大寬度 */
+            word-wrap: break-word; /* 確保文字不會超出容器寬度 */
+        }
+
+        #func1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #func1-title {
+            font-size: 5.2vw; /* 設定基於視口寬度的字體大小 */
+            max-width: 95%; /* 限制最大寬度 */
+            align-self: flex-start; /* 在交叉軸上靠左對齊 */
+            margin: 1em 0px; /* 水平居中 */
+            word-wrap: break-word; /* 確保文字不會超出容器寬度 */
+        }
+        
+        p {
+            font-size: 4vw; /* 設定基於視口寬度的字體大小 */
+            max-width: 95%; /* 限制最大寬度 */
+            text-align: middle;
+            margin: 0 auto; /* 水平居中 */
+            word-wrap: break-word; /* 確保文字不會超出容器寬度 */
+        }
+
+        .camera {
+            max-width: 100%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            box-shadow: 2px 2px 3px black;
+        }
+
+        .output {
+            max-width: 100%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 2px 2px 3px black;
+        }
+
+        #video {
+            display: none;
+            border: 1px solid black;
+            max-width: 100%;
+        }
+
+        #photo {
+            border: 1px solid black;
+            display: none;
+            max-width: 100%;
+        }
+
+        #shooting_btn {
+            display: none;
+            position: absolute; /* 绝对定位 */
+            left: 50%; /* 水平居中 */
+            transform: translateX(-50%); /* 精确居中调整 */
+            bottom: 5%; /* 相对于父元素底部的位置 */
+            background-color: rgba(106, 130, 141, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            color: rgba(255, 255, 255, 1);
+        }
+
+        #stmt {
+            width: 95%;
+            height: 3vh;
+            display: none;
+            position: relative;
+            margin: 10px auto;
+            border-radius: 5px;
+        }
+
+        #upload_btn {
+            display: none;
+            position: relative;
+            width: 50%;
+            margin: 10px auto;
+            background-color: rgba(0, 150, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
+            font-size: 25px;
+            color: rgba(255, 255, 255, 1);
+        }
+
+        #func2 {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start; /* 在交叉軸上靠左對齊 */
+        }
+        
+        #debug-console {
+            display: none;
+            margin: 0; /* 移除外部邊距 */
+            padding: 0; /* 移除內部填充 */
+            width: 100%; /* 設定寬度為 100% */
+        }
+
+        .navbar {
+            display: none;
+            font-weight: bold;
+            position: fixed; /* 固定定位 */
+            bottom: 3vh; /* 距離頁面底部3%螢幕高度 */
+            left: 0; /* 左對齊 */
+            width: 100%; /* 元素寬度為整個視口的寬度 */
+            text-align: center; /* 文字居中 */
+            background-color: white; /* 可根據需要調整背景色 */
+            padding: 10px 0; /* 上下內邊距，視需求調整 */
+            box-shadow: 0px -2px 5px rgba(0,0,0,0.1); /* 如有需要，添加陰影增加層次感 */
+        }
+
+        #canvas {
+            display: none;
+        }
+        
+        @media (min-width: 768px) {
+            /* 針對較大螢幕的媒體查詢 */
+            .custom-subtitle {
+                font-size: 36px; /* 在大螢幕上使用較大的固定字體大小 */
+            }
+            #func1-title {
+                font-size: 30px;
+            }
+            .navbar {
+                font-size: 30px;
+            }
+            p {
+                font-size: 28px; /* 在大螢幕上使用較大的固定字體大小 */
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="text-center mt-4">品質異常及時通知系統</h1>
+        <section class="contentarea">
+            <div class="head">
+                <div class="custom-subtitle">品質異常及時通知系統</div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-6 mx-auto">
-                <div class="text-center my-3">請使用下方相機進行拍攝</div>
-                <div class="text-center">
-                    <!-- 视频和图像元素 -->
-                    <video id="video" class="img-fluid" autoplay="true" playsinline>影片串流目前不可用。</video>
-                    <img id="photo" class="img-fluid" alt="拍攝到的圖像" style="display: none;" />
-                    <button id="shooting_btn" class="btn btn-primary mt-2">拍攝照片</button>
+            <dl id="func1">
+                <div id="func1-title">請使用下方相機進行拍攝</div>
+                <div class="camera">
+                    <video id="video" autoplay="true" playsinline>影片串流目前不可用。</video>
+                    <img id="photo" alt="拍攝到的圖像" />
+                    <button id="shooting_btn">拍攝照片</button>
                 </div>
-                <input type="text" id="stmt" class="form-control mt-3" placeholder="請描述一下這張照片 (Optional)" style="display: none;">
-                <button id="upload_btn" class="btn btn-success mt-2" style="display: none;">送出</button>
-            </div>
-        </div>
-        <footer class="text-center mt-4">
-            <p>Copyright © 2023 捷拓科技-工程部 昱展</p>
-        </footer>
+                <br>
+                <input type="text" id="stmt" placeholder="請描述一下這張照片 (Optional)">
+                <button id="upload_btn">送出</button>
+                <br>
+            </dl>
+            <dl id="func2">
+                <div id="debug-console"></div>
+            </dl>
+            <div class="navbar">Copyright © 2023 捷拓科技-工程部 昱展</div>
+        </section>
     </div>
     <canvas id="canvas"></canvas>
-
-    <!-- Bootstrap Bundle with Popper and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
 
     <script>
         (() => {
