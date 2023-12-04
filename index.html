@@ -36,10 +36,6 @@
             word-wrap: break-word; /* 確保文字不會超出容器寬度 */
         }
 
-        #camera {
-            position: relative;
-            box-shadow: 2px 2px 3px black;
-        }
 
         .output {
             max-width: 100%;
@@ -63,17 +59,13 @@
         }
 
         #shooting_btn {
-            display: none;
-            position: absolute; /* 绝对定位 */
-            left: 50%; /* 水平居中 */
-            transform: translateX(-50%); /* 精确居中调整 */
-            bottom: 5%; /* 相对于父元素底部的位置 */
-            background-color: rgba(106, 130, 141, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: 5px;
-            box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
-            font-size: 16px;
-            color: rgba(255, 255, 255, 1);
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 5%;
+        }
+
+        #camera {
+            box-shadow: 2px 2px 3px black;
         }
 
         #stmt {
@@ -151,18 +143,19 @@
         <!-- 网页大标题 -->
         <div class="row">
             <div class="col-9 col-lg-6">
-                <h1 class="m-0 py-3">品質異常及時通知系統</h2>
+                <h1 class="fw-bold m-0 py-3">品質異常及時通知系統</h2>
             </div>
         </div>
         <div class="row">
             <section class="col-9 col-lg-6 mx-auto fs-6">
                 <div class="row">
-                    <h4 class="col-12 py-3 fw-normal">請使用下方相機進行拍攝</h4>
-                    <div id="camera" class="mx-auto d-flex flex-column align-items-center">
-                        <video id="video" autoplay="true" playsinline>影片串流目前不可用。</video>
-                        <img id="photo" alt="拍攝到的圖像" />
-                        <button id="shooting_btn">拍攝照片</button>
+                    <h5 class="col-12 py-3 fw-normal">請使用下方相機進行拍攝</h5>
+                    <div id="camera" class="mx-auto d-flex flex-column align-items-center position-relative shadow">
+                        <video id="video" class="w-100 border video-photo" autoplay="true" playsinline style="display: none;">影片串流目前不可用。</video>
+                        <img id="photo" class="w-100 border video-photo" style="display: none;" alt="拍攝到的圖像" />
+                        <button id="shooting_btn" class="btn position-absolute">拍攝照片</button>
                     </div>
+                    
                     <br>
                     <input type="text" id="stmt" placeholder="請描述一下這張照片 (Optional)">
                     <button id="upload_btn">送出</button>
