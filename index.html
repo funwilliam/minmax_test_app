@@ -13,27 +13,25 @@
     <style>
         body {
             font-family: Jost, "Microsoft JhengHei", 微軟正黑體, 微软雅黑, sans-serif, 'Noto Sans TC', -apple-system, Arial, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'Nimbus Sans L', Arial, 'Liberation Sans', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans CN', 'Source Han Sans SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 'ST Heiti', SimHei, 'WenQuanYi Zen Hei Sharp', sans-serif;
-            margin: 0;
+            padding-bottom: 2vh; /* 適當的底部內邊距，避免內容被 .foot 覆蓋 */
         }
 
         .container {
             padding-top: 4vh;
-            padding-bottom: 1vh;
             max-width: 1080px;
             margin: auto;
-        }
-
-        .head {
-            max-width: 85%;
-            margin: auto;
-            align-self: flex-start; /* 在交叉軸上靠左對齊 */
         }
 
         .contentarea {
             display: block;
             font-size: 16px;
             max-width: 75%;
+            min-height: 90vh; /* 確保主要內容區至少占滿*/
             margin: auto;
+        }
+
+        .head {
+            align-self: flex-start; /* 在交叉軸上靠左對齊 */
         }
 
         .custom-title, .custom-subtitle {
@@ -144,22 +142,14 @@
             color: rgba(255, 255, 255, 1);
         }
 
-        #debug-console {
-            display: none;
-        }
-
         .foot {
-            margin: auto;
             position: fixed; /* 固定定位 */
             bottom: 3vh; /* 距離頁面底部3%螢幕高度 */
-            width: 100%;
+            left: 0; /* 左對齊 */
+            width: 100%; /* 元素寬度為整個視口的寬度 */
             text-align: center; /* 文字居中 */
-            font-weight: bold;
             background-color: white; /* 可根據需要調整背景色 */
-            padding-left: 0px;
-            padding-top: 10px;
-            padding-bottom: 0px;
-            padding-right: 0px;
+            padding: 10px 0; /* 上下內邊距，視需求調整 */
             box-shadow: 0px -2px 5px rgba(0,0,0,0.1); /* 如有需要，添加陰影增加層次感 */
         }
 
@@ -190,10 +180,11 @@
 
 <body>
     <div class="container">
-        <div class="head">
-            <div class="custom-subtitle">品質異常及時通知系統</div>
-        </div>
         <section class="contentarea">
+            <div class="head">
+                <div class="custom-title">捷拓&emsp;工程部</div>
+                <div class="custom-subtitle">品質異常及時通知系統</div>
+            </div>
             <dl id="func1">
                 <div id="func1-title">請使用下方相機進行拍攝</div>
                 <div class="camera">
@@ -206,9 +197,9 @@
                 <button id="upload_btn">送出</button>
                 <div id="debug-console"></div>
                 <br>
+                <div class="foot">Copyright © 2023 捷拓科技-工程部 昱展</div>
             </dl>
         </section>
-        <div class="foot">Copyright © 2023 捷拓科技-工程部 昱展</div>
     </div>
     <canvas id="canvas"></canvas>
 
@@ -235,7 +226,6 @@
             let photo = null;
             let shooting_btn = null;
 
-            // 
             let figure = null;
 
             let server_rul = ' https://minmax-notification-sys.onrender.com'
@@ -288,10 +278,9 @@
                         }
                         canvas.width = video.videoWidth;
                         canvas.height = video.videoHeight;
-
-                        let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
-                        let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
-                        $('#debug-console').empty().append(source_rect).append(display_rect);
+                        // let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
+                        // let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
+                        // $('#debug-console').empty().append(source_rect).append(display_rect);
                     },
                     false,
                 );
@@ -378,9 +367,9 @@
                         // downloadLink.click();
                         // document.body.removeChild(downloadLink);
 
-                        let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
-                        let display_rect = $('<p>').text('顯示框=' + photo.width.toString() + ',' + photo.height.toString() + ' , 螢幕寬=' + screen.width.toString());
-                        $('#debug-console').empty().append(source_rect).append(display_rect);
+                        // let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
+                        // let display_rect = $('<p>').text('顯示框=' + photo.width.toString() + ',' + photo.height.toString() + ' , 螢幕寬=' + screen.width.toString());
+                        // $('#debug-console').empty().append(source_rect).append(display_rect);
                     } catch (err) {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
@@ -395,9 +384,9 @@
                     $('#stmt').hide();
                     $('#upload_btn').hide();
                     video.play().then(() => {
-                        let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
-                        let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
-                        $('#debug-console').empty().append(source_rect).append(display_rect);
+                        // let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
+                        // let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
+                        // $('#debug-console').empty().append(source_rect).append(display_rect);
                     }).catch(err => {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
