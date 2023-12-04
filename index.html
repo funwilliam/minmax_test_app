@@ -131,9 +131,16 @@
             color: rgba(255, 255, 255, 1);
         }
 
+        #func2 {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* 在交叉軸上靠左對齊 */
+        }
         #debug-console {
             display: block;
-            align-self: flex-start; /* 在交叉軸上靠左對齊 */
+            margin: 0; /* 移除外部邊距 */
+            padding: 0; /* 移除內部填充 */
+            width: 100%; /* 設定寬度為 100% */
         }
 
         .foot {
