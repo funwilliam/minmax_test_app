@@ -11,26 +11,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
     <title>捷拓工程部品異及時通知系統</title>
     <style>
-        html, body {
-            height: 100%; /* 確保 body 和 html 元素佔滿整個視窗高度 */
-            margin: 0; /* 移除預設邊距 */
-            display: flex; /* 啟用 Flexbox */
-            flex-direction: column; /* 子元素垂直排列 */
+        body {
+            font-family: Jost, "Microsoft JhengHei", 微軟正黑體, 微软雅黑, sans-serif, 'Noto Sans TC', -apple-system, Arial, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'Nimbus Sans L', Arial, 'Liberation Sans', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans CN', 'Source Han Sans SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 'ST Heiti', SimHei, 'WenQuanYi Zen Hei Sharp', sans-serif;
+            margin: auto;
         }
 
         .container {
-            flex: 1; /* 允許 container 元素佔據所有可用空間 */
             padding-top: 4vh;
             max-width: 1080px;
             margin: auto;
-            display: flex; /* 啟用 Flexbox */
-            flex-direction: column; /* 子元素垂直排列 */
         }
 
         .contentarea {
             display: block;
             font-size: 16px;
             max-width: 75%;
+            min-height: 90vh; /* 確保主要內容區至少占滿*/
             margin: auto;
         }
 
@@ -59,7 +55,7 @@
             margin: 1em 0px; /* 水平居中 */
             word-wrap: break-word; /* 確保文字不會超出容器寬度 */
         }
-
+        
         p {
             font-size: 4vw; /* 設定基於視口寬度的字體大小 */
             max-width: 95%; /* 限制最大寬度 */
@@ -101,10 +97,10 @@
 
         #shooting_btn {
             display: none;
-            position: absolute; /* 絕對定位 */
+            position: absolute; /* 绝对定位 */
             left: 50%; /* 水平居中 */
-            transform: translateX(-50%); /* 精確居中調整 */
-            bottom: 5%; /* 相對於父元素底部的位置 */
+            transform: translateX(-50%); /* 精确居中调整 */
+            bottom: 5%; /* 相对于父元素底部的位置 */
             background-color: rgba(106, 130, 141, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.7);
             border-radius: 5px;
@@ -140,7 +136,6 @@
             flex-direction: column;
             align-items: flex-start; /* 在交叉軸上靠左對齊 */
         }
-
         #debug-console {
             display: block;
             margin: 0; /* 移除外部邊距 */
@@ -150,7 +145,9 @@
 
         .foot {
             font-weight: bold;
-            position: relative; /* 更改為相對定位 */
+            position: fixed; /* 固定定位 */
+            bottom: 3vh; /* 距離頁面底部3%螢幕高度 */
+            left: 0; /* 左對齊 */
             width: 100%; /* 元素寬度為整個視口的寬度 */
             text-align: center; /* 文字居中 */
             background-color: white; /* 可根據需要調整背景色 */
@@ -161,7 +158,7 @@
         #canvas {
             display: none;
         }
-
+        
         @media (min-width: 768px) {
             /* 針對較大螢幕的媒體查詢 */
             .custom-subtitle {
@@ -177,7 +174,6 @@
                 font-size: 28px; /* 在大螢幕上使用較大的固定字體大小 */
             }
         }
-
     </style>
 </head>
 
