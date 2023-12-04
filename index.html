@@ -13,7 +13,7 @@
     <style>
         body {
             font-family: Jost, "Microsoft JhengHei", 微軟正黑體, 微软雅黑, sans-serif, 'Noto Sans TC', -apple-system, Arial, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, 'Nimbus Sans L', Arial, 'Liberation Sans', 'PingFang SC', 'Hiragino Sans GB', 'Source Han Sans CN', 'Source Han Sans SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 'ST Heiti', SimHei, 'WenQuanYi Zen Hei Sharp', sans-serif;
-            padding-bottom: 2vh; /* 適當的底部內邊距，避免內容被 .foot 覆蓋 */
+            margin: auto;
         }
 
         .container {
@@ -34,19 +34,12 @@
             align-self: flex-start; /* 在交叉軸上靠左對齊 */
         }
 
-        .custom-title, .custom-subtitle {
+        .custom-subtitle {
+            font-size: 5vw; /* 或其他您希望的大小 */
             font-weight: bold;
             margin: 0px; /* 移除邊距 */
             max-width: 100%; /* 限制最大寬度 */
             word-wrap: break-word; /* 確保文字不會超出容器寬度 */
-        }
-        
-        .custom-title {
-            font-size: 6vw; /* 或其他您希望的大小 */
-        }
-
-        .custom-subtitle {
-            font-size: 5vw; /* 或其他您希望的大小 */
         }
 
         #func1 {
@@ -122,6 +115,7 @@
 
         #stmt {
             width: 100%;
+            height: 3vh;
             display: none;
             margin: 10px auto;
             align-items: center;
@@ -159,9 +153,6 @@
         
         @media (min-width: 768px) {
             /* 針對較大螢幕的媒體查詢 */
-            .custom-title {
-                font-size: 40px; /* 在大螢幕上使用較大的固定字體大小 */
-            }
             .custom-subtitle {
                 font-size: 36px; /* 在大螢幕上使用較大的固定字體大小 */
             }
@@ -182,7 +173,6 @@
     <div class="container">
         <section class="contentarea">
             <div class="head">
-                <div class="custom-title">捷拓&emsp;工程部</div>
                 <div class="custom-subtitle">品質異常及時通知系統</div>
             </div>
             <dl id="func1">
@@ -197,8 +187,8 @@
                 <button id="upload_btn">送出</button>
                 <div id="debug-console"></div>
                 <br>
-                <div class="foot">Copyright © 2023 捷拓科技-工程部 昱展</div>
             </dl>
+            <div class="foot">Copyright © 2023 捷拓科技-工程部 昱展</div>
         </section>
     </div>
     <canvas id="canvas"></canvas>
