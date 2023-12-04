@@ -21,44 +21,12 @@
             margin: 0;
         }
 
-        .container {
-            padding-top: 4vh;
-            max-width: 1080px;
-            margin: auto;
-        }
-
-        .contentarea {
-            display: block;
-            font-size: 16px;
-            max-width: 75%;
-            margin: auto;
-        }
-
-        .head {
-            align-self: flex-start; /* 在交叉軸上靠左對齊 */
-        }
-
-        .custom-subtitle {
-            font-size: 5.5vw; /* 或其他您希望的大小 */
-            font-weight: bold;
-            margin: 0px; /* 移除邊距 */
-            max-width: 100%; /* 限制最大寬度 */
-            word-wrap: break-word; /* 確保文字不會超出容器寬度 */
-        }
-
         #func1 {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        #func1-title {
-            font-size: 4.8vw; /* 設定基於視口寬度的字體大小 */
-            max-width: 95%; /* 限制最大寬度 */
-            align-self: flex-start; /* 在交叉軸上靠左對齊 */
-            margin: 1em 0px; /* 水平居中 */
-            word-wrap: break-word; /* 確保文字不會超出容器寬度 */
-        }
         
         p {
             font-size: 4vw; /* 設定基於視口寬度的字體大小 */
@@ -68,12 +36,7 @@
             word-wrap: break-word; /* 確保文字不會超出容器寬度 */
         }
 
-        .camera {
-            max-width: 100%;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        #camera {
             position: relative;
             box-shadow: 2px 2px 3px black;
         }
@@ -184,28 +147,35 @@
 </head>
 
 <body>
-    <div class="container">
-        <section class="contentarea">
-            <div class="row">
-                <div class="custom-subtitle">品質異常及時通知系統</div>
+    <div class="container pt-4">
+        <!-- 网页大标题 -->
+        <div class="row">
+            <div class="col-9 col-lg-6">
+                <h2 class="fw-bold m-0">品質異常及時通知系統</h2>
             </div>
-            <dl class="row">
-                <div id="func1-title">請使用下方相機進行拍攝</div>
-                <div class="camera">
-                    <video id="video" autoplay="true" playsinline>影片串流目前不可用。</video>
-                    <img id="photo" alt="拍攝到的圖像" />
-                    <button id="shooting_btn">拍攝照片</button>
+        </div>
+        <div class="row">
+            <section class="col-9 col-lg-6 mx-auto fs-6">
+                <div class="row">
+                    <h4 class="col-12">請使用下方相機進行拍攝</h4>
+                    <div id="camera" class="mx-auto d-flex flex-column align-items-center">
+                        <video id="video" autoplay="true" playsinline>影片串流目前不可用。</video>
+                        <img id="photo" alt="拍攝到的圖像" />
+                        <button id="shooting_btn">拍攝照片</button>
+                    </div>
+                    <br>
+                    <input type="text" id="stmt" placeholder="請描述一下這張照片 (Optional)">
+                    <button id="upload_btn">送出</button>
+                    <br>
                 </div>
-                <br>
-                <input type="text" id="stmt" placeholder="請描述一下這張照片 (Optional)">
-                <button id="upload_btn">送出</button>
-                <br>
-            </dl>
-            <dl class="row">
-                <div id="debug-console"></div>
-            </dl>
-            <footer class="text-center mt-4">Copyright © 2023 捷拓科技-工程部 昱展</footer>
-        </section>
+                <div class="row">
+                    <div id="debug-console"></div>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            <footer class="col-9 col-lg-6 mt-4 text-center">Copyright © 2023 捷拓科技-工程部 昱展</footer>
+        </div>
     </div>
     <canvas id="canvas"></canvas>
 
