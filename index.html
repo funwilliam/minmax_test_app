@@ -29,15 +29,28 @@
             max-width: 100%;
         }
 
-        #shooting_btn {
+        #camera_operating {
             display: none;
+            height: 7vh;
+        }
+
+        #shooting_btn {
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            bottom: 5%;
+            transform: translateX(-50%) translateY(-50%);
             color: white;
             background-color: rgba(106, 130, 141, 0.7); /* 淡绿色，透明度设置为 0.7 */
             border: 1px solid rgba(255, 255, 255, 0.7); /* 浅白色边框 */
             box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        #album_btn {
+            top: 50%;
+            transform: translateY(-50%);
+            left: 75%;
+            border: 1px solid rgba(106, 130, 141, 0.3);
+            color: white; /* White text */
+            cursor: pointer; /* Mouse pointer on hover */
         }
 
         #upload_btn {
@@ -66,12 +79,16 @@
 </head>
 
 <body>
-    <header>
+    <header class="fixed-top">
     <!-- 網頁大標題 -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light shadow rounded-3">
             <div class="container-fluid">
-                <!-- 標題部分，加入並靠左 -->
-                <h1 class="navbar-brand fw-bold">品質異常及時通知系統</h1>
+                <div class="mx-3">
+                    <!-- 標題部分，為大螢幕添加完整標題 -->
+                    <h1 class="nav-item navbar-text fw-bold d-none d-lg-block">品質異常及時通知系統</h1>
+                    <!-- 為小螢幕添加縮短標題 -->
+                    <h1 class="nav-item navbar-text fw-bold d-block d-lg-none">品異系統</h1>
+                </div>
 
                 <!-- 響應式切換按鈕 -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -87,7 +104,7 @@
                             <a class="nav-link active" aria-current="page" href="#">主頁</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">下載</a>
+                            <a class="nav-link" href="#">上傳序列</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">設定</a>
@@ -105,7 +122,15 @@
                     <div id="camera" class="d-flex flex-column align-items-center position-relative my-3 shadow">
                         <video id="video" class="w-100 border" autoplay="true" playsinline>影片串流目前不可用。</video>
                         <img id="photo" class="w-100 border" alt="拍攝到的圖像" />
-                        <button id="shooting_btn" class="btn position-absolute">拍攝照片</button>
+                        <div id="camera_operating" class="w-100 mb-4 bottom-0 position-absolute">
+                            <button id="shooting_btn" class="btn w-25 position-absolute">擷取</button>
+                            <button id="album_btn" class="btn h-100 position-absolute rounded-circle">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="rgba(106, 130, 141, 0.3)" class="bi bi-images" viewBox="0 0 16 16">
+                                    <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
+                                    <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <input type="text" id="stmt" class="form-control col-10 my-2 mx-auto rounded"
                         placeholder="請描述一下這張照片 (Optional)">
@@ -269,7 +294,7 @@
                         // canvas不吃jquery設定，debug到崩潰，機掰到爆炸
                         canvas.width = video.videoWidth;
                         canvas.height = video.videoHeight;
-                        $('#shooting_btn').text('重新拍攝');
+                        $('#shooting_btn').text('重拍');
                         $('#photo').width(video.offsetWidth).height(video.offsetHeight);
                         $('#video').hide();
                         $('#photo').show();
@@ -306,7 +331,7 @@
                     clearphoto();
                     $('#photo').hide();
                     $('#video').show();
-                    $('#shooting_btn').text('拍攝照片');
+                    $('#shooting_btn').text('擷取');
                     $('#stmt').hide();
                     $('#upload_btn').hide();
                     video.play().then(() => {
