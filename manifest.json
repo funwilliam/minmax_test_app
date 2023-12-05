@@ -1,6 +1,7 @@
 {
     "name": "捷拓工程部品異及时通知系统",
     "short_name": "捷拓品異",
+    "description": "一個用來快速傳遞問題與事由至內部網路的解決方案。",
     "icons": [
         {
             "src": "image/android/android-launchericon-512-512.png",
@@ -132,8 +133,10 @@
         }
     ],
     "start_url": "/",
+    "orientation": "Portrait",
     "background_color": "#FFFFFF",
-    "display": "standalone",
+    "display": "fullscreen",
     "scope": "/",
-    "theme_color": "#000000"
+    "theme_color": "#EFEFEF",
+    "lang": "zh-tw"
 }
