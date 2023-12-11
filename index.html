@@ -124,7 +124,8 @@
                         <img id="photo" class="w-100 border" alt="拍攝到的圖像" />
                         <div id="camera_operating" class="w-100 mb-3 bottom-0 position-absolute">
                             <button id="shooting_btn" class="btn w-25 position-absolute">擷取</button>
-                            <button id="album_btn" class="btn h-100 position-absolute rounded-circle">
+                            <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="read_file(this.files)">
+                            <button id="album_btn" class="btn h-100 position-absolute rounded-circle" onclick="document.getElementById('fileInput').click();">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="80%" height="80%" fill="rgba(106, 130, 141, 0.6)" class="bi bi-images" viewBox="0 0 16 16">
                                     <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
                                     <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/>
@@ -203,6 +204,9 @@
                 canvas.width = 0;
                 canvas.height = 0;
                 $('#photo').empty();
+                if (figure) {
+                    URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
+                }
             }
 
             // Capture a photo by fetching the current contents of the video
@@ -211,7 +215,7 @@
             // drawing that to the screen, we can change its size and/or apply
             // other changes before drawing it.
 
-            function takepicture() {
+            function take_picture() {
                 if (streaming) {
                     try {
                         // canvas不吃jquery設定，debug到崩潰，機掰到爆炸
@@ -228,7 +232,7 @@
                         let context = canvas.getContext("2d");
                         context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
                         figure = canvas.toDataURL("image/png");
-                        photo.setAttribute("src", figure);
+                        photo.src = figure;
 
                         $('#stmt').show();
                         $('#upload_btn').show();
@@ -268,12 +272,29 @@
                 }
             }
 
+            function read_file(files) {
+                const [file] = files;
+                if (file) {
+                    clearphoto();
+                    figure = URL.createObjectURL(file);
+                    photo.src = figure;
+                    $('#shooting_btn').text('重拍');
+                    $('#photo').width(video.offsetWidth).height(video.offsetHeight);
+                    $('#video').hide();
+                    $('#photo').show();
+                    $('#stmt').show();
+                    $('#upload_btn').show();
+                }
+            }
+
             function upload() {
                 let constrain = true;
                     if (constrain) {
                         let text = $('#stmt').val();
-                        let data = { text: text, image: figure };
-
+                        let data = {
+                            text: text,
+                            image: figure
+                        };
                         $.ajax({
                             url: server_rul,
                             type: 'POST',
@@ -282,6 +303,7 @@
                             success: function (responds) {
                                 console.log('Success:', responds);
                                 new Notification("上傳已經完成！");
+                                URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
                             },
                             error: function (error) {
                                 console.error('Error:', error);
@@ -347,16 +369,7 @@
                 shooting_btn.addEventListener(
                     "click",
                     (ev) => {
-                        takepicture();
-                        ev.preventDefault();
-                    },
-                    false,
-                );
-
-                album_btn.addEventListener(
-                    "click",
-                    (ev) => {
-                        
+                        take_picture();
                         ev.preventDefault();
                     },
                     false,
