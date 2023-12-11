@@ -313,8 +313,6 @@
                             success: function (responds) {
                                 console.log('Success:', responds);
                                 $('#debug-console').empty().append('已上傳');
-                                new Notification("上傳已經完成！");
-                                $('#debug-console').empty().append('已上傳666');
                                 URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
                             },
                             error: function (error) {
