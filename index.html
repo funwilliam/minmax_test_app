@@ -119,7 +119,7 @@
             <section class="col-9 col-lg-6 mx-auto fs-6">
                 <div class="row">
                     <h4 class="col-12 mt-5 mb-3">⋄&nbsp;請使用下方相機進行拍攝</h4>
-                    <div id="camera" class="d-flex flex-column align-items-center position-relative my-3 shadow">
+                    <div id="camera" class="d-flex flex-column align-items-center position-relative my-3 p-0 shadow">
                         <video id="video" class="w-100 border" autoplay="true" playsinline>影片串流目前不可用。</video>
                         <img id="photo" class="w-100 border" alt="拍攝到的圖像" />
                         <div id="camera_operating" class="w-100 mb-3 bottom-0 position-absolute">
@@ -351,8 +351,6 @@
             function set_padding() {
                 $('#padding-top').height($('#header').height());
                 $('#padding-bottom').height($('#footer').height());
-                let leftPercentage = 100 * ($('#video').width() * 0.15 - $('#album_btn').width() / 2 + $('#camera_operating').width() / 2) / $('#camera_operating').width();
-                $('#album_btn').attr('left', leftPercentage.toString() + '%');
             }
 
             // Set up our event listener to run the startup process
