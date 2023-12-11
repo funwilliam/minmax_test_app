@@ -396,8 +396,6 @@
                             streaming = false;
 
                             photo.onload = e => {
-                                $('#photo').width(photo.naturalWidth).height(photo.naturalHeight);
-
                                 URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
                                 canvas.width = photo.naturalWidth;
                                 canvas.height = photo.naturalHeight;
@@ -405,15 +403,6 @@
                                 const ctx = canvas.getContext('2d');
                                 ctx.drawImage(photo, 0, 0, photo.naturalWidth, photo.naturalHeight);
                                 figure = canvas.toDataURL("image/png");
-
-                                // 下載測試
-                                const downloadLink = document.createElement('a');
-                                downloadLink.href = figure; // figure URL 从 canvas 获取
-                                downloadLink.download = 'captured-image.png'; // 设置下载文件名
-                                document.body.appendChild(downloadLink);
-                                downloadLink.click();
-                                document.body.removeChild(downloadLink);
-                                $('#debug-console').empty().append('下載ing');
                             }
                             
                             $('#shooting_btn').text('重拍');
@@ -422,7 +411,6 @@
                             $('#stmt').show();
                             $('#upload_btn').show();
                         }
-                        // $('#debug-console').empty().append(fileInput.files.length.toString());
                     } catch (err) {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
