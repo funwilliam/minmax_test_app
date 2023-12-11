@@ -193,6 +193,13 @@
             stmt = document.getElementById('stmt');
             upload_btn = document.getElementById('upload_btn');
 
+            function request_permission() {
+                console.log('Notification permission default status:', Notification.permission);
+                Notification.requestPermission(function (status) {
+                    console.log('Notification permission status:', status);
+                });
+            }
+
             // 動態檢查padding，避免內容被工具列與頁尾遮擋
             function set_padding() {
                 $('#padding-top').height($('#header').height());
@@ -200,7 +207,6 @@
             }
 
             // 清理photo元素
-
             function clear_photo() {
                 let context = canvas.getContext('2d');
                 context.clearRect(0, 0, canvas.width, canvas.height);
@@ -212,6 +218,7 @@
                 }
             }
 
+            // 開始串流
             function stream() {
                 navigator.mediaDevices.getUserMedia({
                     video: {
@@ -291,29 +298,7 @@
                 }
             }
 
-            function read_file(files) {
-                // if (files.length === 0) return;
-                try {
-                    const file = files[0];
-                    if (file) {
-                        clear_photo();
-                        figure = URL.createObjectURL(file);
-                        photo.src = figure;
-                        $('#shooting_btn').text('重拍');
-                        $('#video').hide();
-                        $('#photo').show();
-                        $('#stmt').show();
-                        $('#upload_btn').show();
-                    }
-                    $('#debug-console').empty().append(files.length.toString());
-                }
-                catch (err) {
-                    let err_message = $('<p>').text('error message = ' + err.toString());
-                    $('#debug-console').empty().append(err_message);
-                }
-            }
-
-            function upload() {
+            function submit_notification_form() {
                 let constrain = true;
                     if (constrain) {
                         let text = $('#stmt').val();
@@ -328,21 +313,21 @@
                             data: JSON.stringify(data),
                             success: function (responds) {
                                 console.log('Success:', responds);
-                                $('#debug-console').empty().append('已上傳');
+                                $('#debug-console').empty().append('上傳成功');
                                 URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
+                                alert('上傳成功');
                             },
                             error: function (error) {
                                 console.error('Error:', error);
+                                alert('上傳失敗');
                             }
                         });
                     }
             }
 
-            
-
-            // Set up our event listener to run the startup process
-            // once loading is complete.
+            // html載入完成後初始化
             function startup() {
+                request_permission();
                 set_padding();
                 clear_photo();
                 stream();
@@ -402,7 +387,7 @@
                 upload_btn.addEventListener(
                     "click",
                     (ev) => {
-                        upload();
+                        submit_notification_form();
                     },
                     false,
                 );
