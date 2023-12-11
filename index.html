@@ -393,6 +393,7 @@
                             clearphoto();
                             figure = URL.createObjectURL(file);
                             photo.src = figure;
+                            streaming = false;
                             $('#shooting_btn').text('重拍');
                             $('#video').hide();
                             $('#photo').show();
