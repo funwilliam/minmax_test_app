@@ -281,6 +281,7 @@
                             data: JSON.stringify(data),
                             success: function (responds) {
                                 console.log('Success:', responds);
+                                new Notification("上傳已經完成！");
                             },
                             error: function (error) {
                                 console.error('Error:', error);
@@ -365,7 +366,6 @@
                     "click",
                     (ev) => {
                         upload();
-                        new Notification("上傳已經完成！");
                     },
                     false,
                 );
