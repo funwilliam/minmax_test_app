@@ -223,6 +223,7 @@
                     },
                     audio: false
                 }).then((streaming) => {
+                    mode = 'is_streaming';
                     video.srcObject = streaming;
                     video.play();
                     $('#video').show();
