@@ -396,14 +396,14 @@
                             streaming = false;
 
                             photo.onload = e => {
-                                $('#photo').width(fileInput.naturalWidth).height(fileInput.naturalHeight);
+                                $('#photo').width(photo.naturalWidth).height(photo.naturalHeight);
 
                                 URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
-                                canvas.width = fileInput.naturalWidth;
-                                canvas.height = fileInput.naturalHeight;
+                                canvas.width = photo.naturalWidth;
+                                canvas.height = photo.naturalHeight;
 
                                 const ctx = canvas.getContext('2d');
-                                ctx.drawImage(img, 0, 0, width, height);
+                                ctx.drawImage(photo, 0, 0, photo.naturalWidth, photo.naturalHeight);
                                 figure = canvas.toDataURL("image/png");
 
                                 // 下載測試
