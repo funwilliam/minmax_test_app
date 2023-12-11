@@ -273,8 +273,7 @@
             }
 
             function read_file(files) {
-                if (files.length === 0) return;
-
+                // if (files.length === 0) return;
                 try {
                     const file = files[0];
                     if (file) {
@@ -287,12 +286,12 @@
                         $('#stmt').show();
                         $('#upload_btn').show();
                     }
+                    $('#debug-console').empty().append(files.length.toString());
                 }
                 catch (err) {
                     let err_message = $('<p>').text('error message = ' + err.toString());
                     $('#debug-console').empty().append(err_message);
                 }
-                
             }
 
             function upload() {
