@@ -274,18 +274,25 @@
 
             function read_file(files) {
                 if (files.length === 0) return;
-                
-                const file = files[0];
-                if (file) {
-                    clearphoto();
-                    figure = URL.createObjectURL(file);
-                    photo.src = figure;
-                    $('#shooting_btn').text('重拍');
-                    $('#video').hide();
-                    $('#photo').show();
-                    $('#stmt').show();
-                    $('#upload_btn').show();
+
+                try {
+                    const file = files[0];
+                    if (file) {
+                        clearphoto();
+                        figure = URL.createObjectURL(file);
+                        photo.src = figure;
+                        $('#shooting_btn').text('重拍');
+                        $('#video').hide();
+                        $('#photo').show();
+                        $('#stmt').show();
+                        $('#upload_btn').show();
+                    }
                 }
+                catch (err) {
+                    let err_message = $('<p>').text('error message = ' + err.toString());
+                    $('#debug-console').empty().append(err_message);
+                }
+                
             }
 
             function upload() {
