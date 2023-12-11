@@ -395,12 +395,18 @@
                             photo.src = figure;
                             streaming = false;
 
-                            // const width = fileInput.naturalWidth;
-                            // const height = fileInput.naturalHeight;
-                            // block_height = block_width * height / width;
+                            photo.onload = function() {
+                                $('#photo').width(fileInput.naturalWidth).height(fileInput.naturalHeight);
 
-                            $('#photo').width(fileInput.naturalWidth).height(fileInput.naturalHeight);
+                                URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
+                                canvas.width = fileInput.naturalWidth;
+                                canvas.height = fileInput.naturalHeight;
 
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(img, 0, 0, width, height);
+                                figure = canvas.toDataURL("image/png");
+                            }
+                            
                             $('#shooting_btn').text('重拍');
                             $('#video').hide();
                             $('#photo').show();
