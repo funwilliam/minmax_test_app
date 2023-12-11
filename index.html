@@ -178,6 +178,7 @@
             let canvas = null;
             let photo = null;
             let shooting_btn = null;
+            let album_btn = null;
 
             let figure = null;
 
@@ -187,92 +188,11 @@
             canvas = document.getElementById("canvas");
             photo = document.getElementById("photo");
             shooting_btn = document.getElementById("shooting_btn");
+            album_btn = document.getElementById("album_btn");
             stmt = document.getElementById('stmt');
             upload_btn = document.getElementById('upload_btn');
 
             clearphoto();
-
-            function startup() {
-                set_padding()
-                navigator.mediaDevices.getUserMedia({
-                    video: {
-                        facingMode: "environment",
-                        frameRate: { min: 10, max: 120 },
-                        width: 1440,
-                        height: 1080,
-                        focusMode: "continuous"
-                    },
-                    audio: false
-                }).then((stream) => {
-                    video.srcObject = stream;
-                    video.play();
-                    $('#video').show();
-                    $('#camera_operating').show();
-                }).catch((err) => {
-                    console.error(`An error occurred: ${err}`);
-                });
-
-                video.addEventListener(
-                    "canplay",
-                    (ev) => {
-                        if (!streaming) {
-
-                            // height = video.videoHeight / (video.videoWidth / width);
-
-                            // Firefox currently has a bug where the height can't be read from
-                            // the video, so we will make assumptions if this happens.
-
-                            // if (isNaN(height)) {
-                            //     height = 4 * width / 3;
-                            // }
-
-                            // $('#video').width(width).height(height);
-                            // $('#photo').width(width).height(height);
-                            streaming = true;
-                        }
-                        canvas.width = video.videoWidth;
-                        canvas.height = video.videoHeight;
-                        let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
-                        let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
-                        $('#debug-console').empty().append(source_rect).append(display_rect);
-                    },
-                    false,
-                );
-
-                shooting_btn.addEventListener(
-                    "click",
-                    (ev) => {
-                        takepicture();
-                        ev.preventDefault();
-                    },
-                    false,
-                );
-
-                upload_btn.addEventListener(
-                    "click",
-                    (ev) => {
-                        let constrain = true;
-                        if (constrain) {
-                            let text = $('#stmt').val();
-                            let data = { text: text, image: figure };
-
-                            $.ajax({
-                                url: server_rul,
-                                type: 'POST',
-                                contentType: 'json',
-                                data: JSON.stringify(data),
-                                success: function (responds) {
-                                    console.log('Success:', responds);
-                                },
-                                error: function (error) {
-                                    console.error('Error:', error);
-                                }
-                            });
-                        }
-                    },
-                    false,
-                );
-            }
 
             // Fill the photo with an indication that none has been
             // captured.
@@ -355,6 +275,96 @@
 
             // Set up our event listener to run the startup process
             // once loading is complete.
+            function startup() {
+                set_padding();
+                navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: "environment",
+                        frameRate: { min: 10, max: 120 },
+                        width: 1440,
+                        height: 1080,
+                        focusMode: "continuous"
+                    },
+                    audio: false
+                }).then((stream) => {
+                    video.srcObject = stream;
+                    video.play();
+                    $('#video').show();
+                    $('#camera_operating').show();
+                }).catch((err) => {
+                    console.error(`An error occurred: ${err}`);
+                });
+
+                video.addEventListener(
+                    "canplay",
+                    (ev) => {
+                        if (!streaming) {
+
+                            // height = video.videoHeight / (video.videoWidth / width);
+
+                            // Firefox currently has a bug where the height can't be read from
+                            // the video, so we will make assumptions if this happens.
+
+                            // if (isNaN(height)) {
+                            //     height = 4 * width / 3;
+                            // }
+
+                            // $('#video').width(width).height(height);
+                            // $('#photo').width(width).height(height);
+                            streaming = true;
+                        }
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
+                        let display_rect = $('<p>').text('顯示框=' + video.offsetWidth.toString() + ',' + video.offsetHeight.toString() + ' , 螢幕寬=' + screen.width.toString());
+                        $('#debug-console').empty().append(source_rect).append(display_rect);
+                    },
+                    false,
+                );
+
+                shooting_btn.addEventListener(
+                    "click",
+                    (ev) => {
+                        takepicture();
+                        ev.preventDefault();
+                    },
+                    false,
+                );
+
+                album_btn.addEventListener(
+                    "click",
+                    (ev) => {
+                        
+                        ev.preventDefault();
+                    },
+                    false,
+                );
+                
+                upload_btn.addEventListener(
+                    "click",
+                    (ev) => {
+                        let constrain = true;
+                        if (constrain) {
+                            let text = $('#stmt').val();
+                            let data = { text: text, image: figure };
+
+                            $.ajax({
+                                url: server_rul,
+                                type: 'POST',
+                                contentType: 'json',
+                                data: JSON.stringify(data),
+                                success: function (responds) {
+                                    console.log('Success:', responds);
+                                },
+                                error: function (error) {
+                                    console.error('Error:', error);
+                                }
+                            });
+                        }
+                    },
+                    false,
+                );
+            }
             window.addEventListener("load", startup, false);
         })();
     </script>
