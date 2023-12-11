@@ -385,38 +385,34 @@
                     false,
                 );
                 
-                fileInput.addEventListener(
-                    "onchange",
-                    (ev) => {
-                        if (fileInput.files.length === 0) return;
-                        try {
-                            const [file] = fileInput.files;
-                            if (file) {
-                                clearphoto();
-                                figure = URL.createObjectURL(file);
-                                photo.src = figure;
-                                streaming = false;
-                                
-                                // const width = photo.naturalWidth;
-                                // const height = photo.naturalHeight;
-                                // block_height = block_width * height / width;
+                fileInput.onchange = evt => {
+                    if (fileInput.files.length === 0) return;
+                    try {
+                        const [file] = fileInput.files;
+                        if (file) {
+                            clearphoto();
+                            figure = URL.createObjectURL(file);
+                            photo.src = figure;
+                            streaming = false;
+                            
+                            // const width = photo.naturalWidth;
+                            // const height = photo.naturalHeight;
+                            // block_height = block_width * height / width;
 
-                                $('#photo').width(photo.naturalWidth).height(photo.naturalHeight);
+                            $('#photo').width(photo.naturalWidth).height(photo.naturalHeight);
 
-                                $('#shooting_btn').text('重拍');
-                                $('#video').hide();
-                                $('#photo').show();
-                                $('#stmt').show();
-                                $('#upload_btn').show();
-                            }
-                            $('#debug-console').empty().append(files.length.toString());
-                        } catch (err) {
-                            let err_message = $('<p>').text('error message = ' + err.toString());
-                            $('#debug-console').empty().append(err_message);
+                            $('#shooting_btn').text('重拍');
+                            $('#video').hide();
+                            $('#photo').show();
+                            $('#stmt').show();
+                            $('#upload_btn').show();
                         }
-                    },
-                    false,
-                );
+                        $('#debug-console').empty().append(files.length.toString());
+                    } catch (err) {
+                        let err_message = $('<p>').text('error message = ' + err.toString());
+                        $('#debug-console').empty().append(err_message);
+                    }
+                }
 
                 upload_btn.addEventListener(
                     "click",
