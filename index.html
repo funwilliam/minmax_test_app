@@ -124,7 +124,7 @@
                         <img id="photo" class="w-100 border" alt="拍攝到的圖像" />
                         <div id="camera_operating" class="w-100 mb-3 bottom-0 position-absolute">
                             <button id="shooting_btn" class="btn w-25 position-absolute">擷取</button>
-                            <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="read_file(this.files)">
+                            <input type="file" id="fileInput" accept="image/*" style="display: none;">
                             <button id="album_btn" class="btn h-100 position-absolute rounded-circle" onclick="document.getElementById('fileInput').click();">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="80%" height="80%" fill="rgba(106, 130, 141, 0.6)" class="bi bi-images" viewBox="0 0 16 16">
                                     <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
@@ -180,6 +180,7 @@
             let photo = null;
             let shooting_btn = null;
             let album_btn = null;
+            let fileInput = null;
 
             let figure = null;
 
@@ -190,6 +191,8 @@
             photo = document.getElementById("photo");
             shooting_btn = document.getElementById("shooting_btn");
             album_btn = document.getElementById("album_btn");
+            fileInput = document.getElementById("fileInput");
+
             stmt = document.getElementById('stmt');
             upload_btn = document.getElementById('upload_btn');
 
@@ -382,6 +385,28 @@
                     false,
                 );
                 
+                fileInput.onchange = evt => {
+                    if (files.length === 0) return;
+                    try {
+                        const [file] = fileInput.files;
+                        if (file) {
+                            clearphoto();
+                            figure = URL.createObjectURL(file);
+                            photo.src = figure;
+                            $('#shooting_btn').text('重拍');
+                            $('#video').hide();
+                            $('#photo').show();
+                            $('#stmt').show();
+                            $('#upload_btn').show();
+                        }
+                        $('#debug-console').empty().append(files.length.toString());
+                    }
+                    catch (err) {
+                        let err_message = $('<p>').text('error message = ' + err.toString());
+                        $('#debug-console').empty().append(err_message);
+                    }
+                }
+
                 upload_btn.addEventListener(
                     "click",
                     (ev) => {
