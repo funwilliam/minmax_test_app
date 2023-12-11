@@ -394,12 +394,12 @@
                             figure = URL.createObjectURL(file);
                             photo.src = figure;
                             streaming = false;
-                            
-                            // const width = photo.naturalWidth;
-                            // const height = photo.naturalHeight;
+
+                            // const width = fileInput.naturalWidth;
+                            // const height = fileInput.naturalHeight;
                             // block_height = block_width * height / width;
 
-                            $('#photo').width(photo.naturalWidth).height(photo.naturalHeight);
+                            $('#photo').width(fileInput.naturalWidth).height(fileInput.naturalHeight);
 
                             $('#shooting_btn').text('重拍');
                             $('#video').hide();
@@ -412,7 +412,7 @@
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
                     }
-                }
+                };
 
                 upload_btn.addEventListener(
                     "click",
