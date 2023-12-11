@@ -68,7 +68,7 @@
         }
 
         #debug-console {
-            display: none;
+            /* display: none; */
         }
 
         #canvas {
@@ -279,7 +279,6 @@
                     figure = URL.createObjectURL(file);
                     photo.src = figure;
                     $('#shooting_btn').text('重拍');
-                    $('#photo').width(video.offsetWidth).height(video.offsetHeight);
                     $('#video').hide();
                     $('#photo').show();
                     $('#stmt').show();
