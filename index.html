@@ -395,7 +395,7 @@
                             photo.src = figure;
                             streaming = false;
 
-                            photo.onload = function() {
+                            photo.onload = e => {
                                 $('#photo').width(fileInput.naturalWidth).height(fileInput.naturalHeight);
 
                                 URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
