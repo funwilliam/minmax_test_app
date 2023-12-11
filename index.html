@@ -405,6 +405,14 @@
                                 const ctx = canvas.getContext('2d');
                                 ctx.drawImage(img, 0, 0, width, height);
                                 figure = canvas.toDataURL("image/png");
+
+                                // 下載測試
+                                const downloadLink = document.createElement('a');
+                                downloadLink.href = figure; // figure URL 从 canvas 获取
+                                downloadLink.download = 'captured-image.png'; // 设置下载文件名
+                                document.body.appendChild(downloadLink);
+                                downloadLink.click();
+                                document.body.removeChild(downloadLink);
                             }
                             
                             $('#shooting_btn').text('重拍');
