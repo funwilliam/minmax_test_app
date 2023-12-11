@@ -386,7 +386,7 @@
                 );
                 
                 fileInput.onchange = evt => {
-                    if (files.length === 0) return;
+                    if (fileInput.files.length === 0) return;
                     try {
                         const [file] = fileInput.files;
                         if (file) {
@@ -400,12 +400,11 @@
                             $('#upload_btn').show();
                         }
                         $('#debug-console').empty().append(files.length.toString());
-                    }
-                    catch (err) {
+                    } catch (err) {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
                     }
-                }
+                };
 
                 upload_btn.addEventListener(
                     "click",
