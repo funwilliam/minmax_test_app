@@ -413,6 +413,7 @@
                                 document.body.appendChild(downloadLink);
                                 downloadLink.click();
                                 document.body.removeChild(downloadLink);
+                                $('#debug-console').empty().append('下載ing');
                             }
                             
                             $('#shooting_btn').text('重拍');
