@@ -194,10 +194,12 @@
             upload_btn = document.getElementById('upload_btn');
 
             function request_permission() {
-                console.log('Notification permission default status:', Notification.permission);
-                Notification.requestPermission(function (status) {
-                    console.log('Notification permission status:', status);
-                });
+                // console.log('Notification permission default status:', Notification.permission);
+                // Notification.requestPermission(
+                //     function (status) {
+                //         console.log('Notification permission status:', status);
+                //     }
+                // );
             }
 
             // 動態檢查padding，避免內容被工具列與頁尾遮擋
