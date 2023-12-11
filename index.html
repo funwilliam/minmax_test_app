@@ -409,7 +409,7 @@
                             $('#stmt').show();
                             $('#upload_btn').show();
                         }
-                        $('#debug-console').empty().append(files.length.toString());
+                        $('#debug-console').empty().append(fileInput.files.length.toString());
                     } catch (err) {
                         let err_message = $('<p>').text('error message = ' + err.toString());
                         $('#debug-console').empty().append(err_message);
