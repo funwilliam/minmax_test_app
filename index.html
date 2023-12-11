@@ -167,10 +167,7 @@
             let block_width = Math.min(screen_width * 0.75, 1080 * 0.75);
             let block_height = block_width * 4 / 3;
 
-            // |streaming| indicates whether or not we're currently streaming
-            // video from the camera. Obviously, we start at false.
-
-            let streaming = false;
+            let mode = 'waiting_init';
 
             // The various HTML elements we need to configure or control. These
             // will be set by the startup() function.
@@ -196,12 +193,15 @@
             stmt = document.getElementById('stmt');
             upload_btn = document.getElementById('upload_btn');
 
-            clearphoto();
+            // 動態檢查padding，避免內容被工具列與頁尾遮擋
+            function set_padding() {
+                $('#padding-top').height($('#header').height());
+                $('#padding-bottom').height($('#footer').height());
+            }
 
-            // Fill the photo with an indication that none has been
-            // captured.
+            // 清理photo元素
 
-            function clearphoto() {
+            function clear_photo() {
                 let context = canvas.getContext('2d');
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 canvas.width = 0;
@@ -212,14 +212,29 @@
                 }
             }
 
-            // Capture a photo by fetching the current contents of the video
-            // and drawing it into a canvas, then converting that to a PNG
-            // format figure URL. By drawing it on an offscreen canvas and then
-            // drawing that to the screen, we can change its size and/or apply
-            // other changes before drawing it.
-
+            function stream() {
+                navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: "environment",
+                        frameRate: { min: 10, max: 120 },
+                        width: 1440,
+                        height: 1080,
+                        focusMode: "continuous"
+                    },
+                    audio: false
+                }).then((streaming) => {
+                    video.srcObject = streaming;
+                    video.play();
+                    $('#video').show();
+                    $('#camera_operating').show();
+                }).catch((err) => {
+                    console.error(`An error occurred: ${err}`);
+                });
+            }
+            
+            // 截圖video串流為.png格式
             function take_picture() {
-                if (streaming) {
+                if (mode === 'is_streaming') {
                     try {
                         // canvas不吃jquery設定，debug到崩潰，機掰到爆炸
                         canvas.width = video.videoWidth;
@@ -229,7 +244,7 @@
                         $('#video').hide();
                         $('#photo').show();
 
-                        streaming = false;
+                        mode = 'preview_before_submit';
                         video.pause();
 
                         let context = canvas.getContext("2d");
@@ -256,9 +271,9 @@
                         $('#debug-console').empty().append(err_message);
                     }
                 }
-                else {
-                    streaming = true;
-                    clearphoto();
+                else if (mode === 'preview_before_submit') {
+                    mode = 'is_streaming';
+                    clear_photo();
                     $('#photo').hide();
                     $('#video').show();
                     $('#shooting_btn').text('擷取');
@@ -280,7 +295,7 @@
                 try {
                     const file = files[0];
                     if (file) {
-                        clearphoto();
+                        clear_photo();
                         figure = URL.createObjectURL(file);
                         photo.src = figure;
                         $('#shooting_btn').text('重拍');
@@ -322,51 +337,18 @@
                     }
             }
 
-            function set_padding() {
-                $('#padding-top').height($('#header').height());
-                $('#padding-bottom').height($('#footer').height());
-            }
+            
 
             // Set up our event listener to run the startup process
             // once loading is complete.
             function startup() {
                 set_padding();
-                navigator.mediaDevices.getUserMedia({
-                    video: {
-                        facingMode: "environment",
-                        frameRate: { min: 10, max: 120 },
-                        width: 1440,
-                        height: 1080,
-                        focusMode: "continuous"
-                    },
-                    audio: false
-                }).then((stream) => {
-                    video.srcObject = stream;
-                    video.play();
-                    $('#video').show();
-                    $('#camera_operating').show();
-                }).catch((err) => {
-                    console.error(`An error occurred: ${err}`);
-                });
+                clear_photo();
+                
 
                 video.addEventListener(
                     "canplay",
                     (ev) => {
-                        if (!streaming) {
-
-                            // height = video.videoHeight / (video.videoWidth / width);
-
-                            // Firefox currently has a bug where the height can't be read from
-                            // the video, so we will make assumptions if this happens.
-
-                            // if (isNaN(height)) {
-                            //     height = 4 * width / 3;
-                            // }
-
-                            // $('#video').width(width).height(height);
-                            // $('#photo').width(width).height(height);
-                            streaming = true;
-                        }
                         canvas.width = video.videoWidth;
                         canvas.height = video.videoHeight;
                         let source_rect = $('<p>').text('影像源=' + video.videoWidth.toString() + ',' + video.videoHeight.toString());
@@ -386,14 +368,16 @@
                 );
                 
                 fileInput.onchange = evt => {
-                    if (fileInput.files.length === 0) return;
-                    try {
+                    if (fileInput.files.length === 0) {
+                        mode = 'waiting_init';
+                    }
+                    else {
                         const [file] = fileInput.files;
                         if (file) {
-                            clearphoto();
+                            clear_photo();
                             figure = URL.createObjectURL(file);
                             photo.src = figure;
-                            streaming = false;
+                            mode = 'preview_before_submit';
 
                             photo.onload = e => {
                                 URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
@@ -411,9 +395,6 @@
                             $('#stmt').show();
                             $('#upload_btn').show();
                         }
-                    } catch (err) {
-                        let err_message = $('<p>').text('error message = ' + err.toString());
-                        $('#debug-console').empty().append(err_message);
                     }
                 };
 
