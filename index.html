@@ -351,6 +351,8 @@
             function set_padding() {
                 $('#padding-top').height($('#header').height());
                 $('#padding-bottom').height($('#footer').height());
+                let leftPercentage = 100 * ($('#video').width() * 0.15 - $('#album_btn').width() / 2 + $('#camera_operating').width() / 2) / $('#camera_operating').width();
+                $('#album_btn').attr('left', leftPercentage.toString() + '%');
             }
 
             // Set up our event listener to run the startup process
