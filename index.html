@@ -194,12 +194,17 @@
             upload_btn = document.getElementById('upload_btn');
 
             function request_permission() {
-                // console.log('Notification permission default status:', Notification.permission);
-                // Notification.requestPermission(
-                //     function (status) {
-                //         console.log('Notification permission status:', status);
-                //     }
-                // );
+                if ("Notification" in window) {
+                    alert('Notification permission default status:' + Notification.permission.toString());
+                    Notification.requestPermission(
+                        function (status) {
+                            alert('Notification permission status:' + status.toString());
+                        }
+                    );
+                }
+                else {
+                    alert('no Notification in window');
+                }
             }
 
             // 動態檢查padding，避免內容被工具列與頁尾遮擋
@@ -321,7 +326,7 @@
                             },
                             error: function (error) {
                                 console.error('Error:', error);
-                                alert('上傳失敗');
+                                alert('上傳失敗: ' + error.toString());
                             }
                         });
                     }
