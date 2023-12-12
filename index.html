@@ -361,11 +361,7 @@
                         if (file) {
                             clear_photo();
                             mode = 'preview_before_submit';
-                            const reader = new FileReader();
-                            reader.onload = e => {
-                                figure = e.target.result;
-                                photo.src = figure;
-                                photo.onload = e => {
+                            photo.onload = e => {
                                 // URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
                                 // canvas.width = photo.naturalWidth;
                                 // canvas.height = photo.naturalHeight;
@@ -375,6 +371,10 @@
                                 // figure = canvas.toDataURL("image/png");
                                 $('#photo').width(block_width).height(photo.naturalHeight * block_width / photo.naturalWidth);
                             }
+                            const reader = new FileReader();
+                            reader.onload = e => {
+                                figure = e.target.result;
+                                photo.src = figure;
                             };
                             // figure = URL.createObjectURL(file);
                             
