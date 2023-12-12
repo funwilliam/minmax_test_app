@@ -193,20 +193,6 @@
             stmt = document.getElementById('stmt');
             upload_btn = document.getElementById('upload_btn');
 
-            function request_permission() {
-                if ("Notification" in window) {
-                    alert('Notification permission default status:' + Notification.permission.toString());
-                    Notification.requestPermission(
-                        function (status) {
-                            alert('Notification permission status:' + status.toString());
-                        }
-                    );
-                }
-                else {
-                    alert('no Notification in window');
-                }
-            }
-
             // 動態檢查padding，避免內容被工具列與頁尾遮擋
             function set_padding() {
                 $('#padding-top').height($('#header').height());
@@ -334,7 +320,6 @@
 
             // html載入完成後初始化
             function startup() {
-                request_permission();
                 set_padding();
                 clear_photo();
                 stream();
@@ -380,7 +365,7 @@
                                 // const ctx = canvas.getContext('2d');
                                 // ctx.drawImage(photo, 0, 0, photo.naturalWidth, photo.naturalHeight);
                                 // figure = canvas.toDataURL("image/png");
-                                $('#photo').width(photo.naturalWidth).height(photo.naturalHeight);
+                                $('#photo').width(block_width).height(photo.naturalHeight * block_width / photo.naturalWidth);
                             }
                             
                             $('#shooting_btn').text('重拍');
