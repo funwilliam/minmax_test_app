@@ -39,8 +39,10 @@
             left: 50%;
             transform: translateX(-50%) translateY(-50%);
             color: white;
-            background-color: rgba(106, 130, 141, 0.7); /* 淡绿色，透明度设置为 0.7 */
-            border: 1px solid rgba(255, 255, 255, 0.7); /* 浅白色边框 */
+            background-color: rgba(106, 130, 141, 0.7);
+            /* 淡绿色，透明度设置为 0.7 */
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            /* 浅白色边框 */
             box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
@@ -48,14 +50,17 @@
             top: 50%;
             left: 65%;
             transform: translateY(-50%);
-            color: white; /* White text */
-            cursor: pointer; /* Mouse pointer on hover */
+            color: white;
+            /* White text */
+            cursor: pointer;
+            /* Mouse pointer on hover */
         }
 
         #upload_btn {
             display: none;
             background-color: rgba(0, 150, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.7); /* 浅白色边框 */
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            /* 浅白色边框 */
             box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
@@ -79,7 +84,7 @@
 
 <body>
     <header id="header" class="fixed-top">
-    <!-- 網頁大標題 -->
+        <!-- 網頁大標題 -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light shadow rounded-3">
             <div class="container-fluid">
                 <div class="mx-3">
@@ -90,9 +95,8 @@
                 </div>
 
                 <!-- 響應式切換按鈕 -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
+                    aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -125,10 +129,13 @@
                         <div id="camera_operating" class="w-100 mb-3 bottom-0 position-absolute">
                             <button id="shooting_btn" class="btn w-25 position-absolute">擷取</button>
                             <input type="file" id="fileInput" accept="image/*" style="display: none;">
-                            <button id="album_btn" class="btn h-100 position-absolute rounded-circle" onclick="document.getElementById('fileInput').click();">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="80%" height="80%" fill="rgba(106, 130, 141, 0.6)" class="bi bi-images" viewBox="0 0 16 16">
-                                    <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
-                                    <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10"/>
+                            <button id="album_btn" class="btn h-100 position-absolute rounded-circle"
+                                onclick="document.getElementById('fileInput').click();">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="80%" height="80%"
+                                    fill="rgba(106, 130, 141, 0.6)" class="bi bi-images" viewBox="0 0 16 16">
+                                    <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
+                                    <path
+                                        d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10" />
                                 </svg>
                             </button>
                         </div>
@@ -232,7 +239,7 @@
                     console.error(`An error occurred: ${err}`);
                 });
             }
-            
+
             // 截圖video串流為.png格式
             function take_picture() {
                 if (mode === 'is_streaming') {
@@ -293,29 +300,29 @@
 
             function submit_notification_form() {
                 let constrain = true;
-                    if (constrain) {
-                        let text = $('#stmt').val();
-                        let data = {
-                            text: text,
-                            image: figure
-                        };
-                        $.ajax({
-                            url: server_rul,
-                            type: 'POST',
-                            contentType: 'json',
-                            data: JSON.stringify(data),
-                            success: function (responds) {
-                                console.log('Success:', responds);
-                                $('#debug-console').empty().append('上傳成功');
-                                URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
-                                alert('上傳成功');
-                            },
-                            error: function (error) {
-                                console.error('Error:', error);
-                                alert('上傳失敗: ' + error.toString());
-                            }
-                        });
-                    }
+                if (constrain) {
+                    let text = $('#stmt').val();
+                    let data = {
+                        text: text,
+                        image: figure
+                    };
+                    $.ajax({
+                        url: server_rul,
+                        type: 'POST',
+                        contentType: 'json',
+                        data: JSON.stringify(data),
+                        success: function (responds) {
+                            console.log('Success:', responds);
+                            $('#debug-console').empty().append('上傳成功');
+                            URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
+                            alert('上傳成功');
+                        },
+                        error: function (error) {
+                            console.error('Error:', error);
+                            alert('上傳失敗: ' + error.toString());
+                        }
+                    });
+                }
             }
 
             // html載入完成後初始化
@@ -344,7 +351,7 @@
                     },
                     false,
                 );
-                
+
                 fileInput.onchange = evt => {
                     if (fileInput.files.length === 0) {
                         mode = 'waiting_init';
@@ -353,10 +360,13 @@
                         const [file] = fileInput.files;
                         if (file) {
                             clear_photo();
-                            figure = URL.createObjectURL(file);
-                            photo.src = figure;
                             mode = 'preview_before_submit';
-
+                            const reader = new FileReader();
+                            reader.onload = e => {
+                                figure = e.target.result;
+                                photo.src = figure;
+                            };
+                            // figure = URL.createObjectURL(file);
                             photo.onload = e => {
                                 // URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
                                 // canvas.width = photo.naturalWidth;
@@ -367,7 +377,7 @@
                                 // figure = canvas.toDataURL("image/png");
                                 $('#photo').width(block_width).height(photo.naturalHeight * block_width / photo.naturalWidth);
                             }
-                            
+
                             $('#shooting_btn').text('重拍');
                             $('#video').hide();
                             $('#photo').show();
