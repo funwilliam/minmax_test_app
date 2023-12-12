@@ -96,8 +96,10 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Print(data.Text)
-	log.Print(data.Image)
+	// 顯示收到的封包
+	// log.Print(data.Text)
+	// log.Print(data.Image)
+
 	// 如果有文字
 	if data.Text != "" {
 		stmt = data.Text
@@ -120,10 +122,11 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// SMTP 配置
-	login := "minmax.ed.notification.sys@gmail.com" // 更改为您的 Gmail 地址
-	password := os.Getenv("SMTP_PASS")              // Gmail 密码或应用专用密码
-	to := "minmax.ed.notification.sys@gmail.com"    // 更改为收件人地址
-	subject := "測試"                                 // 邮件主题
+	login := os.Getenv("SMTP_ID")      // 更改为您的 Gmail 地址
+	password := os.Getenv("SMTP_PASS") // Gmail 密码或应用专用密码
+	// to 			:= "minmax.ed.notification.sys@gmail.com"    	// 更改为收件人地址
+	to := sender
+	subject := "[品異] 及時通知系統" // 邮件主题
 
 	if err := sendMail(login, password, to, subject, stmt, base64File, encodeType, mediaType); err != nil {
 		log.Printf("Failed to send email: %v\n", err)
