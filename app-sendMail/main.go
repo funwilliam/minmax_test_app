@@ -96,6 +96,8 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Print(data.Text)
+	log.Print(data.Image)
 	// 如果有文字
 	if data.Text != "" {
 		stmt = data.Text
