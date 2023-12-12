@@ -373,18 +373,18 @@
                             mode = 'preview_before_submit';
 
                             photo.onload = e => {
-                                URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
-                                canvas.width = photo.naturalWidth;
-                                canvas.height = photo.naturalHeight;
+                                // URL.revokeObjectURL(figure); // 釋放 Blob URL 資源
+                                // canvas.width = photo.naturalWidth;
+                                // canvas.height = photo.naturalHeight;
 
-                                const ctx = canvas.getContext('2d');
-                                ctx.drawImage(photo, 0, 0, photo.naturalWidth, photo.naturalHeight);
-                                figure = canvas.toDataURL("image/png");
+                                // const ctx = canvas.getContext('2d');
+                                // ctx.drawImage(photo, 0, 0, photo.naturalWidth, photo.naturalHeight);
+                                // figure = canvas.toDataURL("image/png");
+                                $('#photo').width(photo.naturalWidth).height(photo.naturalHeight);
                             }
                             
                             $('#shooting_btn').text('重拍');
                             $('#video').hide();
-                            $('#photo').width(photo.naturalWidth).height(photo.naturalHeight);
                             $('#photo').show();
                             $('#stmt').show();
                             $('#upload_btn').show();
