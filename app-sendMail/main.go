@@ -114,6 +114,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 		mediaType = dataParts[0]
 		encodeType = dataParts[1]
 		base64File = dataParts[2]
+		log.Print(mediaType + " " + encodeType + " " + base64File)
 	}
 
 	// SMTP 配置
