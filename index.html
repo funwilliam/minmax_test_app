@@ -166,19 +166,16 @@
 
     <script>
         (() => {
-            // The block_width and block_height of the captured photo. We will set the
-            // block_width to the value defined here, but the block_height will be
-            // calculated based on the aspect ratio of the input stream.
-
+            // screen_width: 視窗寬度
             let screen_width = window.innerWidth;
+            // block_width: 影片串流的預設寬度
             let block_width = Math.min(screen_width * 0.75, 1080 * 0.75);
+            // block_width: 影片串流的預設高度
             let block_height = block_width * 4 / 3;
 
             let mode = 'waiting_init';
 
-            // The various HTML elements we need to configure or control. These
-            // will be set by the startup() function.
-
+            // 重要的element
             let video = null;
             let canvas = null;
             let photo = null;
@@ -188,6 +185,7 @@
 
             let figure = null;
 
+            // 後端伺服器網址
             let server_rul = 'https://minmax-notification-sys.onrender.com'
 
             video = document.getElementById("video");

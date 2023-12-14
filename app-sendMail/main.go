@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -33,6 +34,10 @@ func sendMail(id, password, to, subject, body, base64File, encodeType, mediaType
 
 	// 邊界標示符
 	boundary := "my_unique_boundary"
+
+	// MIME 編碼標題
+	addr := strings.NewReplacer("\n", "", "\r", "")
+	subject = fmt.Sprintf("=?UTF-8?B?%s?=", base64.StdEncoding.EncodeToString([]byte(addr.Replace(subject))))
 
 	// 根據 MIME 類型確定檔案副檔名
 	fileExtension := strings.SplitN(mediaType, "/", 2)[1]
